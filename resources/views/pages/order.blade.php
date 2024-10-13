@@ -19,8 +19,8 @@
                             class="flex w-full flex-col gap-4 overflow-hidden rounded-md p-10">
                             <img x-show='isImage' :src="mediaSrc" alt="Tour Image"
                                 class="w-full max-h-full object-contain">
-                            <iframe :src="`https://youtube.com/embed/${mediaSrc}`" class="w-full aspect-video"
-                                frameborder="0"></iframe>
+                            <iframe x-show='!isImage' :src="`https://youtube.com/embed/${mediaSrc}`"
+                                class="w-full aspect-video" frameborder="0"></iframe>
                         </div>
                     </div>
                     <div x-show="showErrorToast" role="alert"
