@@ -4,22 +4,17 @@ namespace App\Http\Controllers\Homepage;
 
 use Carbon\Carbon;
 use App\Models\TourPackage;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use App\Models\ContactPerson;
 use App\Models\PaymentMethod;
+use App\Models\SiteInfo;
 use App\Models\Transaction;
-use DateTime;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
     function getStatusMessage($status) {
         $statusMessages = [
-            'pending'    => ['message' => 'Menunggu Transaksi', 'class' => 'status-pending'],
+            'pending'    => ['message' => 'Menunggu Pembayaran', 'class' => 'status-pending'],
             'processing' => ['message' => 'Sedang Diproses', 'class' => 'status-processing'],
             'invoice'    => ['message' => 'Invoice Dibuat', 'class' => 'status-invoice'],
             'completed'  => ['message' => 'Transaksi Selesai', 'class' => 'status-completed'],
@@ -29,6 +24,7 @@ class TransactionController extends Controller
 
         return $statusMessages[$status] ?? ['message' => 'Status tidak diketahui', 'class' => 'text-black'];
     }
+
     public function index(string $name)
     {
         $transaction = Transaction::where('transaction_code', $name)->first();
@@ -38,18 +34,20 @@ class TransactionController extends Controller
         }
 
         $tourPackage = TourPackage::where('name', $transaction->package_name)->first();
+
         $payment = PaymentMethod::where('payment_name', $transaction->payment_method)
                                     ->where('isActivated', true)
                                     ->first(); 
-        $contact = ContactPerson::where('role', 'transaksi')->get();
-        $statusInfo = $this->getStatusMessage($transaction->status);
 
+        $contact = SiteInfo::select('contact_person_transaction')->first();
+
+        $statusInfo = $this->getStatusMessage($transaction->status);
         return view('pages.transaction', [
             'transaction' => $transaction,
             'tourPackage' => $tourPackage,
             'payment'=> $payment,
             'statusInfo' => $statusInfo,
-            'contact' => $contact
+            'contact' => $contact->contact_person_transaction
         ]);
     }
     
@@ -75,7 +73,7 @@ class TransactionController extends Controller
         }else {
             $transaction = collect([]); 
         }
-
+        
         return view('pages.transaction-search', compact('transaction', ));
     }
     

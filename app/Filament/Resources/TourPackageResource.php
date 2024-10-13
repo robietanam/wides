@@ -44,9 +44,9 @@ class TourPackageResource extends Resource
                                     ->label('Deskripsi')
                                     ->maxLength(65535)
                                     ->columnSpan('full'),
-                                Forms\Components\Select::make('services.*')
+                                Forms\Components\Select::make('services')
                                     ->label('Fitur  Layanan')
-                                    ->relationship('services', 'name') // Assuming name is the display field in Service
+                                    ->relationship('services', 'name') 
                                     ->multiple()
                                     ->preload()
                                     ->createOptionForm([
@@ -83,7 +83,7 @@ class TourPackageResource extends Resource
                                     ->label('Video Galeri')
                                     ->schema([
                                         Forms\Components\TextInput::make('video_url')
-                                            ->label('Link Video')
+                                            ->label('Link Video Youtube')
                                             ->required(),
                                         Forms\Components\TextInput::make('title')
                                             ->label('Judul')

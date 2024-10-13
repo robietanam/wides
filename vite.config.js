@@ -5,7 +5,7 @@ export default defineConfig({
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js', 'resources/js/guest.js', 'resources/css/guest.css',
-                'resources/js/order-plugin.js', 'resources/js/transaction.js'],
+                'resources/js/order-plugin.js', 'resources/js/homepage-plugin.js', 'resources/js/tiptap.js', 'resources/js/transaction.js'],
             refresh: [
                 ...refreshPaths,
                 'app/Filament/**',

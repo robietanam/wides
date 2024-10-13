@@ -48,5 +48,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     carouselItems.forEach((item) => observer.observe(item));
     updateButtonState();
-    ticketApp();
 });

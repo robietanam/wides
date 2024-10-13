@@ -13,7 +13,9 @@ use App\Models\TransactionDetail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\Image;
 use App\Models\PaymentMethod;
+use App\Models\Video;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -23,11 +25,50 @@ class OrderController extends Controller
         $tourPackage = TourPackage::where('name', $name)->firstOrFail();
         $payment = PaymentMethod::where('isActivated', true)->get()->groupBy('type');
         $user = Auth::user();
+        $images = Image::where('tour_package_id', $tourPackage->id)->get();
+        $videos = Video::where('tour_package_id', $tourPackage->id)->get();
+
+        $videosWithYoutubeIds = $videos->map(function ($video) {
+            $video->youtube_id = null;
+
+            if (strpos($video->video_url, 'youtube.com/watch?v=') !== false) {
+                $parsedUrl = parse_url($video->video_url);
+                parse_str($parsedUrl['query'], $queryParams);
+                $videoId = $queryParams['v'];
+                if (isset($videoId)) {
+                    $video->youtube_id = $videoId;
+                }
+            } 
+
+            elseif (strpos($video->video_url, 'youtube.com/shorts/') !== false) {
+                $parsedUrl = parse_url($video->video_url);
+
+                $pathSegments = explode('/', $parsedUrl['path']);
+                $videoId = end($pathSegments);
+                if (isset($videoId)) {
+                    $video->youtube_id = $videoId;
+                }
+            }  
+            elseif (strpos($video->video_url, 'youtu.be') !== false) {
+                $parsedUrl = parse_url($video->video_url);
+
+                $pathSegments = explode('/', $parsedUrl['path']);
+                $videoId = end($pathSegments);
+                if (isset($videoId)) {
+                    $video->youtube_id = $videoId;
+                }
+            }
+        
+        
+            return $video; // Return the modified video object
+        });
         return view('pages.order', [
             'price' => $tourPackage->price,
             'tourPackage' => $tourPackage,
             'payment'=> $payment,
-            'user' => $user 
+            'user' => $user ,
+            'images'=> $images,
+            'videos' => $videosWithYoutubeIds
         ]);
     }
 
@@ -67,16 +108,16 @@ class OrderController extends Controller
             $validatedData['visit_date'] = Carbon::parse($validatedData['visit_date'])->toDateString();
  
             $transaction = Transaction::create([
-                'transaction_code' => (new Transaction())->generateTransactionCode(true), // Assuming you have a method to generate the transaction code
+                'transaction_code' => (new Transaction())->generateTransactionCode(true), 
                 'name' => $validatedData['name'],
                 'email' => $validatedData['email'],
                 'noTelp' => $validatedData['noTelp'],
                 'payment_method' => $validatedData['payment'],
                 'visit_date' => $validatedData['visit_date'],
-                'status' => 'pending', // Set the default status as needed
-                'discount' => 0, // Assuming there's no discount for now, you can modify it based on your logic
+                'status' => 'pending', 
+                'discount' => $tourPackage->discount, 
                 'quantity' => $validatedData['ticket_quantity'],
-                'price' => $tourPackage->price, // Assuming the price is stored in the TourPackage model
+                'price' => $tourPackage->price,
                 'package_name' => $validatedData['name_package'],
                 
             ]);

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class TourPackage extends Model
 {
@@ -50,9 +51,9 @@ class TourPackage extends Model
         return $this->hasMany(Image::class);
     }
 
-    public function services(): HasMany
+    public function services(): BelongsToMany
     {
-        return $this->hasMany(Service::class);
+        return $this->belongsToMany(Service::class, 'service_tour_package');
     }
 
     public function tickets(): HasMany

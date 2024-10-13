@@ -8,6 +8,7 @@ export default {
     presets: [preset],
     content: [
         "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
+        './vendor/awcodes/filament-tiptap-editor/resources/**/*.blade.php',
         "./storage/framework/views/*.php",
         "./vendor/filament/**/*.blade.php",
         './app/Filament/**/*.php',

@@ -20,7 +20,11 @@
     "dependencies": {
         "aos": "^2.3.4",
         "axios": "^1.7.4",
+        "embla-carousel": "^8.3.0",
+        "embla-carousel-autoplay": "^8.3.0",
         "flatpickr": "^4.6.13",
+        "lightgallery": "^2.7.2",
+        "photoswipe": "^5.4.4",
         "simple-jscalendar": "^1.4.5"
     }
 }

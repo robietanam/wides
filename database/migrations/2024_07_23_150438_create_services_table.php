@@ -12,7 +12,6 @@ return new class extends Migration {
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('tour_package_id')->constrained();
             $table->string('name', 100);
             $table->timestamps();
         });

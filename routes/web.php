@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Homepage\TransactionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
@@ -20,11 +21,17 @@ Route::prefix('transaksi')->name('transaction.')->group(function () {
     Route::get('/{name}', [TransactionController::class, 'index'])->name('show');
     Route::get('/', [TransactionController::class, 'search'])->name('search');
 });
+Route::prefix('artikel')->name('article.')->group(function () {
+    Route::get('/qr-code/{id}', [ArticleController::class, 'downloadQrCode'])->name('qr-code');
+    Route::get('/id/{id}', [ArticleController::class, 'showId'])->name('show-id');
+    Route::get('/', [ArticleController::class, 'index'])->name('index');
+});
+
 
 // Routes for User Tickets
 Route::middleware(['auth', 'verified'])->prefix('my-ticket')->name('myticket.')->group(function () {
     Route::get('/', [MyticketController::class, 'index'])->name('show');
-    Route::get('/my-ticket/data', [MyticketController::class, 'getTicketUser'])->name('data');
+    Route::get('/data', [MyticketController::class, 'getTicketUser'])->name('data');
 });
 
 // Routes for User Profile

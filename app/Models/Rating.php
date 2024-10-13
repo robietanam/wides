@@ -5,10 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ContactPerson extends Model
+class Rating extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','role', 'number'];
-    protected $table = 'contact_persons';
+    protected $fillable = ['name', 'stars', 'image', 'description', 'is_displayed'];
 }

@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2.12",
+        "awcodes/filament-tiptap-editor": "^3.4",
         "blade-ui-kit/blade-heroicons": "^2.4",
         "codeat3/blade-unicons": "*",
         "filament/filament": "^3.2",
@@ -15,7 +16,8 @@
         "livewire/livewire": "^3.5",
         "owenvoke/blade-fontawesome": "*",
         "postare/blade-mdi": "*",
-        "saade/blade-iconsax": "*"
+        "saade/blade-iconsax": "*",
+        "simplesoftwareio/simple-qrcode": "^4.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.13",

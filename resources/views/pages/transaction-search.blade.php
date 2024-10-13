@@ -3,8 +3,7 @@
     <div>
         <x-navbar-guest shadowStrength="md" />
 
-        <section
-            class="relative z-10 lg:mt-20 after:contents-[''] after:absolute after:z-0 after:h-full xl:after:w-1/3 after:top-0 after:right-0 after:bg-gray-50">
+        <section class="relative z-10 lg:mt-20 ">
             <div x-data="transactionApp()" class="w-full max-w-7xl md:px-5 lg:px-6 mx-auto relative z-10">
                 <div class="p-5 mb-10">
                     <p class="text-[3rem] font-semibold">Cari Transaksi</p>
@@ -15,7 +14,7 @@
                             <input type="text" x-model="noInvoice" placeholder="VSXXXXXXXXXXX"
                                 class="min-w-[24rem] max-sm:min-w-[14rem] rounded-lg" />
                             <button x-on:click="window.location='/transaksi/' + noInvoice;"
-                                class=" px-3 py-2 bg-slate-600 rounded-md fill-white font-semibold hover:cursor-pointer hover:bg-white hover:fill-black border border-slate-400">
+                                class=" px-3 py-2 bg-blue-600 rounded-md fill-white font-semibold hover:cursor-pointer hover:bg-white hover:fill-black border border-slate-400">
                                 <svg class="w-6 aspect-square  " version="1.1" id="Capa_1"
                                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                     viewBox="0 0 488.4 488.4" xml:space="preserve">
@@ -44,7 +43,7 @@
                             <input type="text" name="noTelp" x-model="noTelp" placeholder="08XXXXXXXXXX"
                                 class="min-w-[24rem] max-sm:min-w-[14rem] rounded-lg" />
                             <button type="submit"
-                                class="px-3 py-2  bg-slate-600 rounded-md fill-white font-semibold hover:cursor-pointer hover:bg-white hover:fill-black border border-slate-400 ">
+                                class="px-3 py-2  bg-blue-600 rounded-md fill-white font-semibold hover:cursor-pointer hover:bg-white hover:fill-black border border-slate-400 ">
                                 <svg class="w-6 aspect-square  " version="1.1" id="Capa_1"
                                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                     viewBox="0 0 488.4 488.4" xml:space="preserve">
@@ -62,8 +61,8 @@
                     </div>
                     <p class="mt-8 text-2xl font-semibold">List Pesanan</p>
                     <div class="p-4 mt-2 border border-slate-300 rounded-md w-full">
-                        @if (empty($transaction))
-                            <p>Pesanan yang anda cari tidak ditemukan</p>
+                        @if ($transaction->isEmpty())
+                            <p>Tidak ada transaksi yang ditemukan</p>
                         @else
                             <div class="flex flex-col gap-2">
                                 @foreach ($transaction as $tct)

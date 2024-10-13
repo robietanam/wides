@@ -39,6 +39,7 @@ class Transaction extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
     public function paymentMethod()
     {
         return $this->belongsTo(PaymentMethod::class, 'payment_method', 'payment_name'); // Foreign key and local key

@@ -46,12 +46,6 @@
                             <span class="ml-2">Ingat saya</span>
                         </label>
 
-                        @if (Route::has('password.request'))
-                        <a class="text-sm text-indigo-600 hover:text-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                            href="{{ route('password.request') }}">
-                            Lupa kata sandi?
-                        </a>
-                        @endif
                     </div>
 
                     <!-- Login Button -->
@@ -64,13 +58,13 @@
 
                     <!-- Register Link -->
                     @if (Route::has('register'))
-                    <div class="flex justify-center text-sm text-gray-600 mt-4">
-                        <span>Belum punya akun?</span>
-                        <a class="ml-2 text-indigo-600 hover:text-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                            href="{{ route('register') }}">
-                            Daftar
-                        </a>
-                    </div>
+                        <div class="flex justify-center text-sm text-gray-600 mt-4">
+                            <span>Belum punya akun?</span>
+                            <a class="ml-2 text-indigo-600 hover:text-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                href="{{ route('register') }}">
+                                Daftar
+                            </a>
+                        </div>
                     @endif
                 </form>
             </div>

@@ -2,19 +2,33 @@
     <x-slot name="title">Homepage</x-slot>
     <div>
         <x-navbar-guest />
-        <main class="min-h-screen">
+        <main class="min-h-screen" x-data="{ modalIsOpen: false, mediaSrc: null }">
             <x-auth-session-status class="mb-4" :status="session('status')" />
-
+            <div x-cloak x-show="modalIsOpen" x-transition.opacity.duration.200ms x-trap.inert.noscroll="modalIsOpen"
+                @keydown.esc.window="modalIsOpen = false" @click.self="modalIsOpen = false"
+                class="fixed inset-0 z-30 flex items-center justify-center bg-black/20 lg:p-32 pb-8 backdrop-blur-md sm:items-center p-4"
+                role="dialog" aria-modal="true" aria-labelledby="defaultModalTitle">
+                <!-- Modal Dialog -->
+                <div x-show="modalIsOpen"
+                    x-transition:enter="transition ease-out duration-200 delay-100 motion-reduce:transition-opacity"
+                    x-transition:enter-start="opacity-0 scale-50" x-transition:enter-end="opacity-100 scale-100"
+                    class="flex w-fit h-fit flex-col gap-4 overflow-hidden rounded-md  justify-center items-center">
+                    <img :src="mediaSrc" alt="Tour Image" class="w-full max-h-[80%] object-contain ">
+                </div>
+            </div>
             <section id="hero" class="hero relative bg-cover bg-center text-white h-[130vh] lg:h-full"
-                style="background-image: url('{{ asset('storage/background/background_13.jpg') }}');">
+                style="background-image: url('{{ asset('storage/' . ($siteInfo->landing_image ?? 'background/background_13.jpg')) }}');">
                 <div class="absolute inset-0 bg-black opacity-45"></div>
                 <div class="px-4 lg:px-20 md:py-16 relative z-10">
+
                     <div class=" lg:py-20 max-w-7xl h-[50vh] lg:h-[90vh] z-20">
                         <h1
                             class="text-6xl font-hero md:text-8xl tracking-wider font-normal leading-tight animate-fadeInScale w-full lg:w-3/6 mt-10 lg:mt-20">
                             Wisata Desa Karangharjo
                         </h1>
+
                         <div class="flex justify-between flex-col lg:flex-row">
+
                             <div class="mb-10">
                                 <p class="text-sm md:text-lg font-sans animate-fadeInDown lg:w-3/6 hidden md:block">
                                     Kami dengan senang hati menyambut Anda di Rumah Pintar Karangharjo, destinasi wisata
@@ -28,11 +42,11 @@
                                 </p>
 
                                 <div class="flex flex-wrap gap-5 mt-4 items-center animate-fadeInUp">
-                                    <a href="#services"
-                                        class="btn bg-white text-primary shadow-button hover:bg-primary hover:text-white transition-all duration-300 hover:animate-tiltHover">Order
+                                    <a href="#layanan"
+                                        class="p-3 flex flex-row gap-1 justify-center items-center bg-white text-primary shadow-button hover:bg-primary hover:text-white transition-all duration-300 hover:animate-tiltHover">Order
                                         Paket<i class="fas fa-plus"></i></a>
-                                    <a href="javascript:void(0)"
-                                        class="btn bg-transparent text-white border-0 hover:bg-white hover:text-primary"><i
+                                    <a href="#galeri"
+                                        class="p-3 flex flex-row gap-1 justify-center items-center bg-transparent text-white border-0 hover:bg-white hover:text-primary"><i
                                             class="fa-regular fa-circle-play text-2xl"></i>Lihat Aktivitas</a>
                                 </div>
                             </div>
@@ -50,36 +64,50 @@
                                         </div>
                                         <div class="flex flex-col space-y-2">
                                             <h2 class="text-lg text-white font-sans font-Normal">Rumah Pintar</h2>
-                                            <p class="text-xs font-light">Dusun Sumberpinang, Desa Karangharjo, Kec.
-                                                Silo,
-                                                Kabupaten Jember, Jawa Timur,
-                                                POS,
-                                                68184</p>
+                                            <p class="text-xs font-light">
+                                                {{ $siteInfo->address ??
+                                                    'Dusun Sumberpinang, Desa Karangharjo, Kec.Silo, Kabupaten Jember, Jawa Timur,POS,68184' }}
+                                            </p>
                                             <div
                                                 class="pt-2 md:pt-4 translate-y-3 flex flex-col md:flex-row justify-between md:items-center">
-                                                <div x-data="{ copied: false, copyText: '+62 8233-5351-928' }">
-                                                    <div class="flex gap-2">
-                                                        <i class="fa fa-phone" aria-hidden="true"></i>
-                                                        <p @click="
-                                                    navigator.clipboard.writeText(copyText);
-                                                    copied = true;
-                                                    setTimeout(() => copied = false, 3000)
-                                                    "
-                                                            :class="{ 'text-semibold': copied }"
-                                                            class="text-xs italic cursor-pointer"
-                                                            x-text="copied ? 'Tersalin!' : copyText">
-                                                        </p>
-                                                    </div>
+                                                <div x-data="{ copied: false }">
+                                                    @if (isset($siteInfo->phone_number))
+                                                        <div class="flex gap-2">
+                                                            <i class="fa fa-phone" aria-hidden="true"></i>
+                                                            <p @click="
+                                                            navigator.clipboard.writeText('{{ $siteInfo->phone_number }}');
+                                                            copied = true
+                                                            setTimeout(()=>(copied=false), 3000)
+                                                            "
+                                                                :class="{ 'text-semibold': copied }"
+                                                                class="text-xs italic cursor-pointer"
+                                                                x-text="copied ? 'Tersalin!' : '{{ $siteInfo->phone_number }}'">
+                                                            </p>
+                                                        </div>
+                                                    @endif
                                                 </div>
                                                 <div
                                                     class="flex flex-row gap-5 items-center mt-2 md:mt-0 md:-translate-x-3 ">
-                                                    <a class="text-lg hover:scale-110 hover:duration-700"
-                                                        target="_blank" href="https://wa.me/6282335351928"><i
-                                                            class="fab fa-whatsapp"></i></a>
-                                                    <a class="text-lg hover:scale-110 hover:duration-700"
-                                                        href="#"><i class="fab fa-facebook"></i></a>
-                                                    <a class="text-lg hover:scale-110 hover:duration-700"
-                                                        href="#"><i class="fab fa-instagram"></i></a>
+                                                    @if (isset($siteInfo->contact_person))
+                                                        <a class="text-lg hover:scale-110 hover:duration-700"
+                                                            target="_blank"
+                                                            :href="'https://wa.me/62' + '{{ $siteInfo->contact_person }}'">
+                                                            <i class="fab fa-whatsapp"></i>
+                                                        </a>
+                                                    @endif
+                                                    @if (isset($siteInfo->facebook))
+                                                        <a class="text-lg hover:scale-110 hover:duration-700"
+                                                            :href="'https://facebook.com/' + '{{ $siteInfo->facebook }}'">
+                                                            <i class="fab fa-facebook"></i>
+                                                        </a>
+                                                    @endif
+
+                                                    @if (isset($siteInfo->instagram))
+                                                        <a class="text-lg hover:scale-110 hover:duration-700"
+                                                            :href="'https://instagram.com/' + '{{ $siteInfo->instagram }}'">
+                                                            <i class="fab fa-instagram"></i>
+                                                        </a>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -91,7 +119,7 @@
                 </div>
             </section>
 
-            <section id="services" class="relative my-4 lg:my-20 h-full lg:mb-60">
+            <section id="layanan" class="relative my-4 lg:my-20 h-full lg:mb-32">
                 <div class="px-4 lg:px-20 mx-auto py-10 md:py-6 z-10 h-full space-y-2">
                     <div class="mt-16 flex flex-col md:flex-row lg:justify-between">
                         <div>
@@ -140,7 +168,8 @@
                                         image="{{ asset('storage/' . $package->image_icon) }}"
                                         price="IDR {{ number_format($package->price, 0, ',', '.') }}"
                                         name="{{ $package->name }}"
-                                        description="{{ Str::limit($package->description, 100, ' ....') }}">
+                                        description="{{ Str::limit($package->description, 100, ' ....') }}"
+                                        discount="{{ $package->discount }}">
                                         {{-- <x-slot name="features">
                                     @foreach ($package->services as $service)
                                     <div class="flex items-center">
@@ -158,158 +187,115 @@
                             untuk
                             belajar
                             dan bermain bersama keluarga.</p>
-                        <div class="mt-2 flex gap-x-2">
-                            <a href="#services" class="text-sm lg:text-lg font-medium text-[#0a369d]">Liburan Sekarang!!
-                                <svg viewBox="0 0 20 20" fill="currentColor" class="inline-block h-5 w-5">
-                                    <path fill-rule="evenodd"
-                                        d="M2 10a.75.75 0 0 1 .75-.75h12.59l-2.1-1.95a.75.75 0 1 1 1.02-1.1l3.5 3.25a.75.75 0 0 1 0 1.1l-3.5 3.25a.75.75 0 1 1-1.02-1.1l2.1-1.95H2.75A.75.75 0 0 1 2 10Z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </a>
-                        </div>
                     </div>
                 </div>
             </section>
 
-            <section class="h-full lg:mb-60">
+            <section id="galeri" class="h-full mt-16 lg:mt-32"">
+                <div class="px-4 lg:px-20 mx-auto my-4 lg:my-10 h-full">
+                    <div class="text-center mb-8 text-green-950" data-aos="fade-right" data-aos-duration="1000"
+                        data-aos-once="true">
+                        <h2 class="text-2xl lg:text-4xl font-bold">Lihat Kegiatan Kami</h2>
+                    </div>
+                    @if ($videoId)
+                        <div class="px-20 max-md:px-8 flex flex-col justify-center items-center h-full">
+                            <iframe class="w-full aspect-video"
+                                src="https://www.youtube.com/embed/{{ $videoId }}">
+                            </iframe>
+                        </div>
+                    @endif
+                </div>
+                @if (!empty($siteInfo->gallery))
+                    <div class="embla w-[90%] max-md:w-full mx-auto px-20 max-md:px-5 ">
+                        <div class="embla__viewport overflow-hidden rounded-lg">
+                            <div class="embla__container flex " id="lightgallery">
+                                @foreach ($siteInfo->gallery as $image)
+                                    <div @click="modalIsOpen = true;mediaSrc='{{ asset('storage/' . $image) }}'"
+                                        class="embla__slide min-w-[50%] ml-1 rounded-lg overflow-hidden border border-slate-300 p-0 hover:cursor-pointer"
+                                        href="{{ asset('storage/' . $image) }}" target="_blank" data-pswp-zoomable>
+                                        <img src="{{ asset('storage/' . $image) }}" alt="Tour Image"
+                                            class="w-full aspect-video object-cover">
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            </section>
+
+            <section class="h-full mt-16 lg:mt-32">
                 <div class="px-4 lg:px-20 mx-auto my-4 lg:my-10">
                     <div class="text-center mb-14 text-green-950" data-aos="fade-right" data-aos-duration="1000"
                         data-aos-once="true">
                         <h3 class="text-gray-600 text-sm font-semibold">CUSTOMER STORY</h3>
                         <h2 class="text-2xl lg:text-4xl font-bold">CHECK PENILAIAN DARI MEREKA</h2>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <div class="w-full mx-auto" data-aos="fade-right" data-aos-duration="1000"
-                            data-aos-once="true">
-                            <div class="card bg-base-100 mt-4 shadow-md p-5">
-                                <div class="flex mt-3 justify-start space-x-2">
-                                    <img class="rounded-full" src="https://via.placeholder.com/100"
-                                        alt="Hanif Pandu Nugroho">
-                                    <div>
-                                        <h4 class="text-lg font-semibold ml-1">Hanif Pandu Nugroho</h4>
-                                        <div class="flex space-x-1 mt-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400"
-                                                viewBox="0 0 20 20" fill="currentColor">
-                                                <path
-                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.834 2.06a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.834-2.06a1 1 0 00-1.175 0l-2.834 2.06c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400"
-                                                viewBox="0 0 20 20" fill="currentColor">
-                                                <path
-                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.834 2.06a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.834-2.06a1 1 0 00-1.175 0l-2.834 2.06c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400"
-                                                viewBox="0 0 20 20" fill="currentColor">
-                                                <path
-                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.834 2.06a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.834-2.06a1 1 0 00-1.175 0l-2.834 2.06c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400"
-                                                viewBox="0 0 20 20" fill="currentColor">
-                                                <path
-                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.834 2.06a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.834-2.06a1 1 0 00-1.175 0l-2.834 2.06c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400"
-                                                viewBox="0 0 20 20" fill="currentColor">
-                                                <path
-                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.834 2.06a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.834-2.06a1 1 0 00-1.175 0l-2.834 2.06c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                            </svg>
+                    @if (!empty($ratings))
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            @foreach ($ratings as $rating)
+                                <div class="w-full mx-auto" data-aos="fade-right" data-aos-duration="1000"
+                                    data-aos-once="true">
+                                    <div class="card bg-base-100 mt-4 shadow-md p-5 min-h-[17rem]">
+                                        <div class="flex mt-3 justify-start space-x-2">
+                                            <img class="rounded-full"
+                                                src="{{ $rating->image ?? 'https://via.placeholder.com/100' }}"
+                                                alt="{{ $rating->name }}">
+                                            <div>
+                                                <h4 class="text-lg font-semibold ml-1">Hanif Pandu Nugroho</h4>
+                                                <div class="flex space-x-1 mt-2">
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        @if ($i <= $rating->stars)
+                                                            <svg viewBox="0 0 24 24" fill="none"
+                                                                class="h-5 w-5 text-yellow-400 fill-yellow-400"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                                    stroke-linejoin="round"></g>
+                                                                <g id="SVGRepo_iconCarrier">
+                                                                    <path
+                                                                        d="M21.12 9.88005C21.0781 9.74719 20.9996 9.62884 20.8935 9.53862C20.7873 9.4484 20.6579 9.38997 20.52 9.37005L15.1 8.58005L12.67 3.67005C12.6008 3.55403 12.5027 3.45795 12.3853 3.39123C12.2678 3.32451 12.1351 3.28943 12 3.28943C11.8649 3.28943 11.7322 3.32451 11.6147 3.39123C11.4973 3.45795 11.3991 3.55403 11.33 3.67005L8.89999 8.58005L3.47999 9.37005C3.34211 9.38997 3.21266 9.4484 3.10652 9.53862C3.00038 9.62884 2.92186 9.74719 2.87999 9.88005C2.83529 10.0124 2.82846 10.1547 2.86027 10.2907C2.89207 10.4268 2.96124 10.5512 3.05999 10.6501L6.99999 14.4701L6.06999 19.8701C6.04642 20.0091 6.06199 20.1519 6.11497 20.2826C6.16796 20.4133 6.25625 20.5267 6.36999 20.6101C6.48391 20.6912 6.61825 20.7389 6.75785 20.7478C6.89746 20.7566 7.03675 20.7262 7.15999 20.6601L12 18.1101L16.85 20.6601C16.9573 20.7189 17.0776 20.7499 17.2 20.7501C17.3573 20.7482 17.5105 20.6995 17.64 20.6101C17.7537 20.5267 17.842 20.4133 17.895 20.2826C17.948 20.1519 17.9636 20.0091 17.94 19.8701L17 14.4701L20.93 10.6501C21.0305 10.5523 21.1015 10.4283 21.1351 10.2922C21.1687 10.1561 21.1634 10.0133 21.12 9.88005Z">
+                                                                    </path>
+                                                                </g>
+                                                            </svg>
+                                                        @else
+                                                            <svg viewBox="0 0 24 24" version="1.2"
+                                                                baseProfile="tiny" class="h-5 w-5  fill-yellow-400"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                                    stroke-linejoin="round"></g>
+                                                                <g id="SVGRepo_iconCarrier">
+                                                                    <path
+                                                                        d="M16.855 20.966c-.224 0-.443-.05-.646-.146l-.104-.051-4.107-2.343-4.107 2.344-.106.053c-.488.228-1.085.174-1.521-.143-.469-.34-.701-.933-.586-1.509l.957-4.642-1.602-1.457-1.895-1.725-.078-.082c-.375-.396-.509-.97-.34-1.492.173-.524.62-.912 1.16-1.009l.102-.018 4.701-.521 1.946-4.31.06-.11c.262-.473.764-.771 1.309-.771.543 0 1.044.298 1.309.77l.06.112 1.948 4.312 4.701.521.104.017c.539.1.986.486 1.158 1.012.17.521.035 1.098-.34 1.494l-.078.078-3.498 3.184.957 4.632c.113.587-.118 1.178-.59 1.519-.252.182-.556.281-.874.281zm-8.149-6.564c-.039.182-.466 2.246-.845 4.082l3.643-2.077c.307-.175.684-.175.99 0l3.643 2.075-.849-4.104c-.071-.346.045-.705.308-.942l3.1-2.822-4.168-.461c-.351-.039-.654-.26-.801-.584l-1.728-3.821-1.726 3.821c-.146.322-.45.543-.801.584l-4.168.461 3.1 2.822c.272.246.384.617.302.966z">
+                                                                    </path>
+                                                                </g>
+                                                            </svg>
+                                                        @endif
+                                                    @endfor
+                                                </div>
+                                                <h2 class="text-sm m-1 font-light">
+                                                    {{ $rating->updated_at->diffForHumans() }}</h2>
+                                            </div>
                                         </div>
-                                        <h2 class="text-sm m-1 font-light">9 bulan yg lalu</h2>
-                                    </div>
-                                </div>
-                                <p class="text-gray-600 mt-3">Terimakasih telah menerima saya untuk melaksanakan
-                                    kegiatan
-                                    praktikum 🙏🏻, semoga rumpi jember semakin berkembang dan sukses selalu aamiin ya
-                                    rabbal alamin</p>
-                            </div>
-                        </div>
-                        <div class="w-full mx-auto" data-aos="fade-right" data-aos-duration="1200"
-                            data-aos-once="true">
-                            <div class="card bg-base-100 mt-4 shadow-md p-5">
-                                <div class="flex mt-3 justify-start space-x-2">
-                                    <img class="rounded-full" src="https://via.placeholder.com/100"
-                                        alt="BUFF TRAVELER">
-                                    <div>
-                                        <h4 class="text-lg font-semibold ml-1">BUFF TRAVELER</h4>
-                                        <div class="flex space-x-1 mt-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400"
-                                                viewBox="0 0 20 20" fill="currentColor">
-                                                <path
-                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.834 2.06a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.834-2.06a1 1 0 00-1.175 0l-2.834 2.06c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400"
-                                                viewBox="0 0 20 20" fill="currentColor">
-                                                <path
-                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.834 2.06a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.834-2.06a1 1 0 00-1.175 0l-2.834 2.06c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400"
-                                                viewBox="0 0 20 20" fill="currentColor">
-                                                <path
-                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.834 2.06a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.834-2.06a1 1 0 00-1.175 0l-2.834 2.06c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400"
-                                                viewBox="0 0 20 20" fill="currentColor">
-                                                <path
-                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.834 2.06a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.834-2.06a1 1 0 00-1.175 0l-2.834 2.06c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400"
-                                                viewBox="0 0 20 20" fill="currentColor">
-                                                <path
-                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.834 2.06a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.834-2.06a1 1 0 00-1.175 0l-2.834 2.06c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                            </svg>
-                                        </div>
-                                        <h2 class="text-sm m-1 font-light">1 tahun yg lalu</h2>
-                                    </div>
-                                </div>
-                                <p class="text-gray-600 mt-3">Cool and educative place at, karangharjo village, silo,
-                                    Jember. Fun education Center for public and students. We can learn anything about
-                                    history, sains, and edupark.
 
-                                    The owner is friendly and family.
-                                    Important think is, tadabur, trip, silaturahmi.</p>
-                            </div>
-                        </div>
-                        <div class="w-full mx-auto" data-aos="fade-right" data-aos-duration="1500"
-                            data-aos-once="true">
-                            <div class="card bg-base-100 mt-4 shadow-md p-5">
-                                <div class="flex mt-3 justify-start space-x-2">
-                                    <img class="rounded-full" src="https://via.placeholder.com/100" alt="Amrullah">
-                                    <div>
-                                        <h4 class="text-lg font-semibold ml-1">Amrullah</h4>
-                                        <div class="flex space-x-1 mt-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400"
-                                                viewBox="0 0 20 20" fill="currentColor">
-                                                <path
-                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.834 2.06a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.834-2.06a1 1 0 00-1.175 0l-2.834 2.06c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400"
-                                                viewBox="0 0 20 20" fill="currentColor">
-                                                <path
-                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.834 2.06a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.834-2.06a1 1 0 00-1.175 0l-2.834 2.06c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400"
-                                                viewBox="0 0 20 20" fill="currentColor">
-                                                <path
-                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.834 2.06a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.834-2.06a1 1 0 00-1.175 0l-2.834 2.06c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400"
-                                                viewBox="0 0 20 20" fill="currentColor">
-                                                <path
-                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.834 2.06a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.834-2.06a1 1 0 00-1.175 0l-2.834 2.06c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400"
-                                                viewBox="0 0 20 20" fill="currentColor">
-                                                <path
-                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.834 2.06a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.834-2.06a1 1 0 00-1.175 0l-2.834 2.06c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                            </svg>
-                                        </div>
-                                        <h2 class="text-sm m-1 font-light">3 tahun yg lalu</h2>
+                                        <!-- prettier-ignore -->
+                                        <p class="text-gray-600 mt-3 text-justify whitespace-normal ">{{ trim(substr($rating->description, 0, 120)) }}@if (strlen($rating->description) > 120)<span id="more_{{ $rating->id }}"
+                                        class="hidden ">{{ trim(substr($rating->description, 120)) }}</span>
+                                        <button @click="readMore('{{ $rating->id }}')"
+                                            id="myBtn_{{ $rating->id }}" class="text-blue-700">... Lebih
+                                            banyak</button>
+
+                                        <!-- prettier-ignore -->
+                                        @endif
+                                        </p>
                                     </div>
                                 </div>
-                                <p class="text-gray-600 mt-3">Edukatif dan inspiratif</p>
-                            </div>
+                            @endforeach
+
                         </div>
-                    </div>
+                    @else
+                        <p> Tidak ada penilaiaan untuk ditampilkan.</p>
+                    @endif
                 </div>
             </section>
 
@@ -328,7 +314,7 @@
                             </div>
                             <div class="flex justify-center">
                                 <img class="rounded-full object-cover size-36 md:size-48 lg:size-52"
-                                    src="{{ asset('storage/background/background_5.png') }}" alt=""
+                                    src="{{ asset('storage/background/background_8.png') }}" alt=""
                                     data-aos="fade-up" data-aos-duration="1000" data-aos-once="true">
                             </div>
                         </div>
@@ -342,30 +328,20 @@
                                 </h3>
                             </div>
                             <div
-                                class="text-2xl font-sans font-medium md:text-4xl animate-fadeInScale w-full text-green-950 mb-4 lg:mb-10">
-                                <span>Berkomitmen pada Pembelajaran</span>
-                                <span class="flex items-center gap-3">
-                                    Berkelanjutan
-                                    <div class="w-8 lg:w-12 h-1 bg-green-950 rounded-lg"></div>
-                                </span>
+                                class="text-2xl font-sans font-medium md:text-4xl animate-fadeInScale w-full text-green-950 my-4 ">
+                                <span>{{ $siteInfo->profile_title ?? 'Berkomitmen pada Pembelajaran Berkelanjutan' }}</span>
                             </div>
-                            <div class="">
+                            <div class="flex flex-col">
                                 <p class="text-gray-700 leading-relaxed mb-5">
-                                    Ini adalah bagian deskripsi tentang kami. Anda bisa menjelaskan visi misi,
-                                    nilai-nilai, atau informasi penting lainnya tentang perusahaan atau organisasi Anda.
-                                    Pastikan deskripsinya informatif dan menarik bagi pengunjung website Anda.
+                                    {{ $siteInfo->profile_desc ?? ' ' }}
                                 </p>
-                                <a href="#"
-                                    class=" px-6 py-3 bg-[#0a369d] text-white rounded-lg hover:bg-[#190a9d] transition duration-300 hover:animate-tiltHover">
-                                    Lihat Selengkapnya <i class="fa fa-arrow-right ml-3"></i>
-                                </a>
+                                <div class="w-16 lg:w-20 h-1 bg-green-950 rounded-lg self-end"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-
-            <x-footer-guest />
+            <x-footer-guest :siteInfo="$siteInfo" />
 
             <x-modal name="auth" :show="$errors->isNotEmpty()" focusable>
                 <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -440,4 +416,25 @@
             </x-modal>
         </main>
     </div>
+    @push('scripts')
+        @vite('resources/js/homepage-plugin.js')
+        <script type="text/javascript">
+            function readMore(id) {
+                var moreText = document.getElementById("more_" + id);
+                var btnText = document.getElementById("myBtn_" + id);
+
+                if (btnText.innerHTML === "Lebih sedikit") {
+                    btnText.innerHTML = "... Lebih banyak";
+                    moreText.classList.add("hidden")
+                } else {
+                    btnText.innerHTML = "Lebih sedikit";
+                    moreText.classList.remove("hidden")
+                }
+            }
+            window.addEventListener('DOMContentLoaded', function() {
+
+
+            });
+        </script>
+    @endpush
 </x-guest-layout>

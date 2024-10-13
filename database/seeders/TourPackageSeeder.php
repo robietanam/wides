@@ -22,7 +22,7 @@ class TourPackageSeeder extends Seeder
             'is_visible' => true,
             'price' => 10000,
             'image_icon' => 'background/background_1.png',
-            'discount' => 10,
+            'discount' => 5,
             'tour_package_code' => (new TourPackage())->generateTourPackageCode()
         ]);
 
@@ -42,7 +42,7 @@ class TourPackageSeeder extends Seeder
             'is_visible' => true,
             'price' => 10000,
             'image_icon' => 'background/background_5.png',
-            'discount' => 10,
+            'discount' => 15,
             'tour_package_code' => (new TourPackage())->generateTourPackageCode()
         ]);
 
@@ -56,17 +56,47 @@ class TourPackageSeeder extends Seeder
             'tour_package_code' => (new TourPackage())->generateTourPackageCode()
         ]);
 
-        $services = [
-            ['tour_package_id' => 1, 'name' => 'Pemandu Wisata Berpengalaman'],
-            ['tour_package_id' => 1, 'name' => 'Transportasi Selama Tour'],
-            ['tour_package_id' => 2, 'name' => 'Tiket Masuk Semua Wahana'],
-            ['tour_package_id' => 2, 'name' => 'Makan Siang'],
-            ['tour_package_id' => 3, 'name' => 'Snack dan Minuman'],
-            ['tour_package_id' => 3, 'name' => 'Asuransi Perjalanan'],
-            ['tour_package_id' => 4, 'name' => 'Fotografer Profesional'],
-            ['tour_package_id' => 4, 'name' => 'Perlengkapan Keamanan'],
+         // Array of services without tour_package_id
+         $services = [
+            ['name' => 'Pemandu Wisata Berpengalaman'],
+            ['name' => 'Transportasi Selama Tour'],
+            ['name' => 'Tiket Masuk Semua Wahana'],
+            ['name' => 'Makan Siang'],
+            ['name' => 'Snack dan Minuman'],
+            ['name' => 'Asuransi Perjalanan'],
+            ['name' => 'Fotografer Profesional'],
+            ['name' => 'Perlengkapan Keamanan'],
         ];
+
         Service::insert($services);
+
+        $tourPackageServices = [
+            // For Tour Package ID 1
+            1 => [
+                'Pemandu Wisata Berpengalaman',
+                'Transportasi Selama Tour',
+            ],
+            2 => [
+                'Tiket Masuk Semua Wahana',
+                'Makan Siang',
+            ],
+            3 => [
+                'Snack dan Minuman',
+                'Asuransi Perjalanan',
+            ],
+            4 => [
+                'Fotografer Profesional',
+                'Perlengkapan Keamanan',
+            ],
+        ];
+
+        foreach ($tourPackageServices as $tourPackageId => $serviceNames) {
+            $serviceIds = Service::whereIn('name', $serviceNames)->pluck('id');
+            $tourPackage = TourPackage::find($tourPackageId);
+            if ($tourPackage) {
+                $tourPackage->services()->attach($serviceIds);
+            }
+        }
 
         $images = [
             ['tour_package_id' => 1, 'image_url' => 'background/background_1.png'],

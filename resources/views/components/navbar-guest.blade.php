@@ -27,7 +27,7 @@
                     </svg>
                 </button>
             @else
-                <a href="#"
+                <a href="/#"
                     class="hidden text-2xl font-bold leading-relaxed lg:inline-block mr-4 py-2 whitespace-nowrap">
                     Wideskarangharjo.
                 </a>
@@ -39,26 +39,26 @@
             <ul class="flex flex-col items-center mt-2 lg:space-x-4 lg:flex-row list-none lg:m-auto">
                 <li class="nav-item">
                     <a :class="{ 'hover:opacity-75': !alwaysVisible, 'text-base-dark': alwaysVisible }"
-                        class="px-3 py-2 font-medium text-sm leading-snug" href="/#services">
+                        class="px-3 py-2 font-medium text-sm leading-snug" href="/">
                         Beranda
                     </a>
                 </li>
                 <li class="nav-item">
                     <a :class="{ 'hover:opacity-75': !alwaysVisible, 'text-base-dark': alwaysVisible }"
-                        class="px-3 py-2 font-medium text-sm leading-snug" href="/#about">
-                        Tentang
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a :class="{ 'hover:opacity-75': !alwaysVisible, 'text-base-dark': alwaysVisible }"
-                        class="px-3 py-2 font-medium text-sm leading-snug" href="/#documentations">
-                        Dokumentasi
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a :class="{ 'hover:opacity-75': !alwaysVisible, 'text-base-dark': alwaysVisible }"
-                        class="px-3 py-2 font-medium text-sm leading-snug" href="/#ticket">
+                        class="px-3 py-2 font-medium text-sm leading-snug" href="/#layanan">
                         Beli Tiket
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a :class="{ 'hover:opacity-75': !alwaysVisible, 'text-base-dark': alwaysVisible }"
+                        class="px-3 py-2 font-medium text-sm leading-snug" href="/artikel">
+                        Artikel
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a :class="{ 'hover:opacity-75': !alwaysVisible, 'text-base-dark': alwaysVisible }"
+                        class="px-3 py-2 font-medium text-sm leading-snug" href="/transaksi">
+                        Transaksi
                     </a>
                 </li>
                 <li class="nav-item lg:hidden">

@@ -23,7 +23,7 @@
                         x-transition:leave-start="opacity-100 transform translate-x-0"
                         x-transition:leave-end="opacity-0 transform -translate-x-full">
                         <div
-                            class="container border border-neutral-500 border-opacity-30  bg-white md:shadow-md rounded-md p-5">
+                            class="container border border-slate-600 border-opacity-30  bg-white md:shadow-md rounded-md p-5">
                             <div>
                                 <div class="navbar fixed top-0 left-0 right-0 z-50 bg-transparent sm:block  lg:hidden">
                                     <div class="flex-none">
@@ -72,29 +72,29 @@
                         <h3 class="font-bold text-2xl leading-10 text-black pb-2 xl:hidden ">
                             Detail Pemesanan</h3>
                         <div
-                            class="container border border-neutral-500 border-opacity-30  bg-white md:shadow-md rounded-md p-5">
+                            class="container border border-slate-600 border-opacity-30  bg-white md:shadow-md rounded-md p-5">
                             <div class="flex flex-col items-center justify-between mb-2 gap-3">
                                 <div class="flex flex-col w-full gap-1">
                                     <p class="text-sm font-bold">Nama Pemesan</p>
-                                    <p class="text-lg max-md:text-base truncate px-3 py-1 bg-blue-50 rounded-lg">
+                                    <p class="text-base truncate px-3 py-1 bg-blue-50 rounded-lg">
                                         {{ $transaction->name }}
                                     </p>
                                 </div>
                                 <div class="flex flex-col w-full gap-1">
                                     <p class="text-sm font-bold">Email</p>
-                                    <p class="text-lg max-md:text-base truncate px-3 py-1 bg-blue-50 rounded-lg">
+                                    <p class="text-base truncate px-3 py-1 bg-blue-50 rounded-lg">
                                         {{ $transaction->email }}
                                     </p>
                                 </div>
                                 <div class="flex flex-col w-full gap-1">
                                     <p class="text-sm font-bold">No Telp.</p>
-                                    <p class="text-lg max-md:text-base truncate px-3 py-1 bg-blue-50 rounded-lg">
+                                    <p class="text-base truncate px-3 py-1 bg-blue-50 rounded-lg">
                                         {{ $transaction->noTelp }}
                                     </p>
                                 </div>
                                 <div class="flex flex-col w-full gap-2">
                                     <p class="text-sm font-bold">Tanggal kunjungan</p>
-                                    <p class="text-lg" id="tanggal_kunjungan"></p>
+                                    <p class="text-base" id="tanggal_kunjungan"></p>
                                     {{-- <div id="my-calendar" class="micro-theme" data-language="id"
                                         data-month-format="month YYYY">
                                     </div> --}}
@@ -102,11 +102,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-span-12  md:py-1 lg:pr-8 pb-8  w-full max-xl:max-w-3xl max-xl:mx-auto max-md:p-3">
+                    <div
+                        class="col-span-12 mb-10 md:py-1 lg:pr-8 pb-8  w-full max-xl:max-w-3xl max-xl:mx-auto max-md:p-3">
                         <h3 class="font-bold text-2xl leading-10 text-black pb-5 hidden md:block">
                             Detail Transaksi</h3>
                         <div
-                            class="container border border-neutral-500 border-opacity-30 bg-white md:shadow-md rounded-md p-5">
+                            class="container border border-slate-600 border-opacity-30 bg-white md:shadow-md rounded-md p-5">
                             <div class=" mb-2 grid grid-cols-2 gap-2">
                                 <p>Nomor Transaksi</p>
                                 <div class="flex gap-2 item-center">
@@ -211,10 +212,9 @@
                                             <div class="p-3">
                                                 <p class="pb-2">
                                                     Kontak yang bisa dihubungi</p>
-                                                @foreach ($contact as $ct)
+                                                @if ($contact)
                                                     <div>
-                                                        <p>{{ $ct->name }}</p>
-                                                        <div onclick="window.open('https://api.whatsapp.com/send?phone=62{{ $ct->number }}&text=Nomor Pesanan : {{ $transaction->transaction_code }} \n','mywindow');"
+                                                        <div onclick="window.open('https://api.whatsapp.com/send?phone=62{{ $contact }}&text=Nomor Pesanan : {{ $transaction->transaction_code }} \n','mywindow');"
                                                             class="group flex flex-row gap-2 py-2 px-5 rounded-md bg-green-400 w-fit shadow-lg border border-slate-300
                                                         hover:bg-white hover:cursor-pointer">
                                                             <svg class="w-4 aspect-square group-hover:fill-green-600 fill-white"
@@ -245,11 +245,11 @@
                                                                 </g>
                                                             </svg>
                                                             <p class="group-hover:text-green-600 text-white">
-                                                                {{ $ct->number }}
+                                                                {{ $contact }}
                                                         </div>
                                                         </p>
                                                     </div>
-                                                @endforeach
+                                                @endif
                                             </div>
 
 
@@ -262,11 +262,9 @@
                                             Kontak yang bisa dihubungi</p>
 
                                         <div class="flex flex-col gap-2">
-                                            @foreach ($contact as $ct)
+                                            @if (isset($contact))
                                                 <div>
-
-                                                    <p>{{ $ct->name }}</p>
-                                                    <div onclick="window.open('https://api.whatsapp.com/send?phone=62{{ $ct->number }}&text=Nomor Pesanan : {{ $transaction->transaction_code }} \n','mywindow');"
+                                                    <div onclick="window.open('https://api.whatsapp.com/send?phone=62{{ $contact }}&text=Nomor Pesanan : {{ $transaction->transaction_code }} \n','mywindow');"
                                                         class="group flex flex-row gap-2 py-2 px-5 rounded-md bg-green-400 w-fit shadow-lg border border-slate-300
                                             hover:bg-white hover:cursor-pointer">
                                                         <svg class="w-4 aspect-square group-hover:fill-green-600 fill-white"
@@ -295,10 +293,10 @@
                                                             </g>
                                                         </svg>
                                                         <p class="group-hover:text-green-600 text-white">
-                                                            {{ $ct->number }}
+                                                            {{ $contact }}
                                                     </div>
                                                     </p>
-                                            @endforeach
+                                            @endif
                                         </div>
 
                                     </div>

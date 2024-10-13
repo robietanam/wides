@@ -16,7 +16,7 @@ class PaymentMethodResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-banknotes';
     protected static ?string $navigationGroup = 'Management';
     protected static ?int $navigationSort = 3;
-    protected static ?string $label = 'Payment Method';
+    protected static ?string $label = 'Metode Pembayaran';
 
     public static function form(Form $form): Form
     {
@@ -52,15 +52,16 @@ class PaymentMethodResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('type')
-                    ->label('Payment Type')
+                    ->label('Tipe')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('payment_name')
                     ->label('Nama Pembayaran'),
                 Tables\Columns\TextColumn::make('account_holder')
-                    ->label('Account Holder'),
+                    ->label('Nama Pemegang Akun'),
                 Tables\Columns\TextColumn::make('account_number')
-                    ->label('Account Number'),
-                Tables\Columns\BooleanColumn::make('isActivated')
+                    ->label('Nomor Akun'),
+                Tables\Columns\IconColumn::make('isActivated')
+                    ->boolean()
                     ->label('Is Active')
                     ->sortable(),
             ])

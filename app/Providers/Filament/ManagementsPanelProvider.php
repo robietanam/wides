@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\UpdatePassword;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
@@ -23,6 +24,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationGroup;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 
@@ -68,22 +70,19 @@ class ManagementsPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
+            ->navigationGroups([
+
+                'Management' => NavigationGroup::make('Management'),
+                'Website' => NavigationGroup::make('Website'),
+                'Akun' => NavigationGroup::make('Akun'),
+            ])
             ->navigationItems([
                 NavigationItem::make('Beranda')
                     ->label(fn(): string => __('filament-panels::pages/dashboard.title'))
                     ->icon('heroicon-o-rectangle-group')
                     ->url(fn(): string => Dashboard::getUrl())
                     ->isActiveWhen(fn() => request()->routeIs('filament.managements.pages.dashboard')),
-                // NavigationItem::make('Analytics')
-                //     // ->url('https://filament.pirsch.io', shouldOpenInNewTab: true)
-                //     ->icon('heroicon-o-presentation-chart-line')
-                //     ->group('Reports')
-                //     ->sort(1),
-                NavigationItem::make('Review')
-                    // ->url('https://filament.pirsch.io', shouldOpenInNewTab: true)
-                    ->icon('heroicon-o-star')
-                    ->group('Reports')
-                    ->sort(2),
+            
                 NavigationItem::make('Paket Layanan')
                     // ->url('https://filament.pirsch.io', shouldOpenInNewTab: true)
                     ->url(fn(): string => TourPackageResource::getUrl())
@@ -96,21 +95,12 @@ class ManagementsPanelProvider extends PanelProvider
                     ->icon('heroicon-o-bold')
                     ->group('Management')
                     ->sort(2),
-                NavigationItem::make('Pengguna')
-                    // ->url('https://filament.pirsch.io', shouldOpenInNewTab: true)
-                    ->icon('heroicon-s-user-group')
-                    ->group('Users')
-                    ->sort(1),
-                NavigationItem::make('Permission')
-                    // ->url('https://filament.pirsch.io', shouldOpenInNewTab: true)
-                    ->icon('heroicon-o-lock-closed')
-                    ->group('Users')
-                    ->sort(2)
+               
             ])
             ->userMenuItems([
                 MenuItem::make()
                     ->label('Settings')
-                    // ->url(fn(): string => Settings::getUrl())
+                    ->url(fn() => UpdatePassword::getUrl())
                     ->icon('heroicon-o-cog-6-tooth'),
                 // ...
             ]);

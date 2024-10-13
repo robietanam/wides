@@ -17,8 +17,9 @@ class DatabaseSeeder extends Seeder
             TourPackageSeeder::class,
             UserSeeder::class,
             PaymentMethodSeeder::class,
-            TransactionSeeder::class,
-            ContactPersonSeeder::class
+            // TransactionSeeder::class,
+            SiteInfoSeeder::class,
+            RatingSeeder::class,
             // TransactionDetailSeeder::class,
         ]);
     }

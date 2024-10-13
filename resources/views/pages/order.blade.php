@@ -6,9 +6,23 @@
         <section
             class="relative z-10 lg:mt-20 after:contents-[''] after:absolute after:z-0 after:h-full xl:after:w-1/3 after:top-0 after:right-0 after:bg-gray-50">
             <div class="w-full max-w-7xl md:px-5 lg:px-6 mx-auto relative z-10">
-
                 <div x-data="ticketApp({{ $tourPackage->price }}, {{ $tourPackage->discount }}, '{{ $tourPackage->name }}', '{{ csrf_token() }}', '{{ route('order.store') }}', {{ $payment }}, {{ $user }})" class="grid grid-cols-12">
-
+                    <div x-cloak x-show="modalIsOpen" x-transition.opacity.duration.200ms
+                        x-trap.inert.noscroll="modalIsOpen" @keydown.esc.window="modalIsOpen = false"
+                        @click.self="modalIsOpen = false"
+                        class="fixed inset-0 z-30 flex items-center justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8"
+                        role="dialog" aria-modal="true" aria-labelledby="defaultModalTitle">
+                        <!-- Modal Dialog -->
+                        <div x-show="modalIsOpen"
+                            x-transition:enter="transition ease-out duration-200 delay-100 motion-reduce:transition-opacity"
+                            x-transition:enter-start="opacity-0 scale-50" x-transition:enter-end="opacity-100 scale-100"
+                            class="flex w-full flex-col gap-4 overflow-hidden rounded-md p-10">
+                            <img x-show='isImage' :src="mediaSrc" alt="Tour Image"
+                                class="w-full max-h-full object-contain">
+                            <iframe :src="`https://youtube.com/embed/${mediaSrc}`" class="w-full aspect-video"
+                                frameborder="0"></iframe>
+                        </div>
+                    </div>
                     <div x-show="showErrorToast" role="alert"
                         class="alert alert-error fixed top-5 right-5 w-fit z-50 flex flex-row">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
@@ -21,7 +35,7 @@
                             class="btn btn-sm btn-circle bg-red-200">✕</button>
                     </div>
 
-                    <div class="col-span-12 xl:col-span-8 md:py-5 lg:pr-8 pb-8 lg:py-11 w-full max-xl:max-w-3xl max-xl:mx-auto"
+                    <div class="relative col-span-12 xl:col-span-8 md:py-5 lg:pr-8 pb-8 lg:py-11 w-full max-xl:max-w-3xl max-xl:mx-auto"
                         x-show="!isMobile || currentStep === 1" x-transition:enter="transition ease-out duration-300"
                         x-transition:enter-start="opacity-0 transform -translate-x-full"
                         x-transition:enter-end="opacity-100 transform translate-x-0"
@@ -43,13 +57,16 @@
                         </div>
 
                         <h3 class="font-bold text-2xl leading-10 text-black pb-5 hidden md:block">
-                            Pemesanan Tiket Wisata</h3>
+                            Pemesanan Tiket Wisata
+                        </h3>
+
                         <div
                             class="container border border-neutral-500 border-opacity-30  bg-white md:shadow-md rounded-md p-5">
                             <div class="border-b border-base-dark">
+
                                 <div class="flex flex-col md:flex-row">
                                     <div class="sticky top-0 md:static lg:w-10/12 lg:h-1/2 lg:rounded-lg z-0">
-                                        <img src="{{ asset('storage/' . $tourPackage->images->first()?->image_url) ?? 'https://placehold.co/600x400?text=' . urlencode($tourPackage->name) }}"
+                                        <img src="{{ asset('storage/' . $tourPackage->image_icon) ?? 'https://placehold.co/600x400?text=' . urlencode($tourPackage->name) }}"
                                             alt="Gambar {{ $tourPackage->name }}" class="w-full h-auto lg:rounded-lg">
                                     </div>
                                     <div class="px-4 bg-white rounded-t-xl py-5 -mt-5 z-10">
@@ -71,12 +88,84 @@
                                             @endforeach
                                         </ul>
                                     </div>
+                                    <h3 class="py-2 text-lg font-semibold">Galeri Kegiatan</h3>
+                                    <div class="embla">
+                                        <div class="embla__viewport overflow-hidden ">
+                                            <div class="embla__container flex ">
+                                                @if (!empty($images))
+                                                    @foreach ($images as $image)
+                                                        <div class="embla__slide min-w-full aspect-video rounded-lg overflow-hidden border border-slate-300 "
+                                                            href="{{ asset('storage/' . $image['image_url']) }}"
+                                                            @click="modalIsOpen = true;isImage=true;mediaSrc='{{ asset('storage/' . $image['image_url']) }}'"
+                                                            target="_blank" data-pswp-zoomable>
+                                                            <img src="{{ asset('storage/' . $image['image_url']) }}"
+                                                                alt="Tour Image" class="w-full h-full object-cover">
+                                                        </div>
+                                                    @endforeach
+                                                @endif
+                                                @if (!empty($videos))
+                                                    @foreach ($videos as $key => $video)
+                                                        <div class="embla__slide min-w-full aspect-video relative hover:cursor-pointer rounded-lg overflow-hidden border border-slate-300 "
+                                                            @click="modalIsOpen = true;isImage=false;mediaSrc='{{ $video->youtube_id }}'">
+
+                                                            <img class="w-full h-full object-cover"
+                                                                src="https://img.youtube.com/vi/{{ $video->youtube_id }}/maxresdefault.jpg" />
+
+                                                            <div
+                                                                class="absolute inset-0  bg-black bg-opacity-50 flex items-center justify-center transition-opacity duration-300">
+
+                                                                <svg viewBox="0 0 24 24"
+                                                                    class="fill-white h-20 aspect-square"
+                                                                    xmlns="http://www.w3.org/2000/svg">
+                                                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                                        stroke-linejoin="round"></g>
+                                                                    <g id="SVGRepo_iconCarrier">
+                                                                        <path
+                                                                            d="M16.6582 9.28638C18.098 10.1862 18.8178 10.6361 19.0647 11.2122C19.2803 11.7152 19.2803 12.2847 19.0647 12.7878C18.8178 13.3638 18.098 13.8137 16.6582 14.7136L9.896 18.94C8.29805 19.9387 7.49907 20.4381 6.83973 20.385C6.26501 20.3388 5.73818 20.0469 5.3944 19.584C5 19.053 5 18.1108 5 16.2264V7.77357C5 5.88919 5 4.94701 5.3944 4.41598C5.73818 3.9531 6.26501 3.66111 6.83973 3.6149C7.49907 3.5619 8.29805 4.06126 9.896 5.05998L16.6582 9.28638Z"
+                                                                            stroke-linejoin="round"></path>
+                                                                    </g>
+                                                                </svg>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="embla-thumbs mt-4">
+                                            <div class="embla-thumbs__viewport overflow-hidden w-full">
+                                                <div class="embla-thumbs__container flex space-x-4">
+                                                    @if (!empty($images))
+                                                        @foreach ($images as $image)
+                                                            <div class="embla-thumbs__slide min-w-28 max-w-28 cursor-pointer rounded-lg overflow-hidden"
+                                                                data-index="{{ $loop->index }}">
+                                                                <img src="{{ asset('storage/' . $image['image_url']) }}"
+                                                                    alt="Thumbnail Image"
+                                                                    class="w-full h-24 object-cover  ">
+                                                            </div>
+                                                        @endforeach
+
+                                                    @endif
+                                                    @if (!empty($videos))
+                                                        @foreach ($videos as $key => $video)
+                                                            <div class="embla-thumbs__slide min-w-28 max-w-28 cursor-pointer rounded-lg overflow-hidden"
+                                                                data-index="{{ $loop->index }}">
+                                                                <img src="https://img.youtube.com/vi/{{ $video->youtube_id }}/default.jpg"
+                                                                    alt="Thumbnail Image"
+                                                                    class="w-full h-24 object-cover  ">
+                                                            </div>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="flex items-center justify-between mb-2">
                                         <div class="p-2">
                                             <span class="text-gray-600 text-sm font-medium">Harga</span>
                                             <div class="flex items-baseline space-x-2 mt-1">
                                                 <span x-text="amount.toLocaleString('id-ID')"
-                                                    class="text-3xl font-extrabold text-indigo-700"></span>
+                                                    class="text-3xl font-extrabold text-blue-700"></span>
 
                                                 <span class="text-gray-600 text-xl font-semibold">IDR</span>
                                             </div>
@@ -141,7 +230,7 @@
                                     <template x-for="(types, index) in paymentMethods" :key="index">
                                         <div>
                                             <button @click="openIndex = index"
-                                                class="w-full h-fit px-5 py-3  rounded-lg border border-indigo-500 text-xl font-medium text-left">
+                                                class="w-full h-fit px-5 py-3  rounded-lg border border-blue-500 text-xl font-medium text-left">
                                                 <div class="flex justify-between items-center">
                                                     <p x-text="index"></p>
                                                     <x-heroicon-o-chevron-down x-show="openIndex !== index"
@@ -155,7 +244,7 @@
                                                     <div x-show="openIndex === index" x-transition>
                                                         <label
                                                             :class="{
-                                                                'bg-indigo-500 text-white shadow-md': paymentMethod ==
+                                                                'bg-blue-500 text-white shadow-md': paymentMethod ==
                                                                     method.payment_name,
                                                                 'bg-white text-base-dark border border-gray-300 hover:bg-gray-50': paymentMethod !=
                                                                     method.payment_name
@@ -181,14 +270,13 @@
                                 </div>
                             </div>
                         </div>
-
                         <!-- Next Button for Mobile -->
                         <template x-if="isMobile">
-                            <div
-                                class="fixed bottom-0 left-0 right-0 z-50 flex flex-col justify-between navbar-transition">
-                                <button class="btn btn-primary text-white font-semibold text-lg py-2"
-                                    @click="currentStep = 2">Lanjutkan</button>
-                            </div>
+                            <button
+                                class=" fixed w-full h-fit py-5 bottom-0 left-0 right-0 z-50 bg-blue-600  text-white font-semibold text-lg "
+                                @click="currentStep = 2">
+                                <p>Lanjutkan</p>
+                            </button>
                         </template>
                     </div>
 
@@ -238,7 +326,7 @@
                                                 </svg>
                                             </div>
                                             <input type="text" id="name" class="w-full rounded-lg pl-10"
-                                                :disabled="{{ !empty($user) }}" x-model="nama" />
+                                                x-model="nama" />
                                         </div>
                                     </div>
                                     <div class="mb-4 text-gray-700">
@@ -255,7 +343,7 @@
                                                 </svg>
                                             </div>
                                             <input type="email" id="email" class="w-full rounded-lg pl-10"
-                                                :disabled="{{ !empty($user) }}" x-model="email" />
+                                                x-model="email" />
                                         </div>
 
                                     </div>
@@ -287,7 +375,7 @@
                                                 </svg>
                                             </div>
                                             <input type="tel" id="phone" class="w-full rounded-lg pl-10"
-                                                :disabled="{{ !empty($user) }}" x-model="noTelp" />
+                                                x-model="noTelp" />
                                         </div>
                                     </div>
                                     <div class="mb-4 text-gray-700">
@@ -325,8 +413,8 @@
                                         </div>
                                         <div class="border-t border-gray-200 pt-4">
                                             <div class="flex justify-between text-lg font-semibold">
-                                                <p>Total Price</p>
-                                                <p class="text-indigo-600">
+                                                <p>Total Harga</p>
+                                                <p class="text-blue-600">
                                                     <span>Rp.</span>
                                                     <span
                                                         x-text="(amount - (amount * discount / 100)).toLocaleString('id-ID')"></span>
@@ -335,7 +423,7 @@
                                         </div>
                                     </div>
                                     <button @click="submitOrder()"
-                                        class="bg-indigo-600 text-white w-full py-3 rounded-md font-medium text-lg hover:bg-indigo-700 transition duration-300">
+                                        class="bg-blue-600 text-white w-full py-3 rounded-md font-medium text-lg hover:bg-blue-700 transition duration-300">
                                         Pesan Paket
                                     </button>
                                 </div>
@@ -414,10 +502,8 @@
                         </div>
                     </div>
 
-
                     {{-- Modal success for dekstop --}}
 
-                    <input type="checkbox" id="my_modal_7" class="modal-toggle" :checked="loading" />
                     <div class="modal" role="dialog" x-show="!isMobile && (currentStep >= 3)"
                         class="fixed inset-0 flex items-center justify-center z-50"
                         x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 scale-75"
@@ -430,7 +516,8 @@
                                     <div class="flex items-center justify-center">
                                         <x-animated-checkmark />
                                     </div>
-                                    <h2 class="font-semibold text-2xl mb-2 text-blue uppercase text-blue-500">Transaksi
+                                    <h2 class="font-semibold text-2xl mb-2 text-blue uppercase text-blue-500">
+                                        Transaksi
                                         Berhasil</h2>
                                 </div>
                                 <div class="flex flex-col justify-center mb-4 text-center gap-10 py-5"
@@ -500,6 +587,10 @@
     @push('style')
         <style>
             /* HTML: <div class="loader"></div> */
+            .slide_active {
+                border: 1px solid #0948f3
+            }
+
             .loader {
                 width: 70px;
                 aspect-ratio: 1;
