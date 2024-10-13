@@ -1,21 +1,34 @@
 <x-guest-layout>
     <x-slot name="title">Homepage</x-slot>
-    <div>
+    <div x-data="{ modalIsOpen: false, mediaSrc: null }">
         <x-navbar-guest />
-        <main class="min-h-screen" x-data="{ modalIsOpen: false, mediaSrc: null }">
-            <x-auth-session-status class="mb-4" :status="session('status')" />
-            <div x-cloak x-show="modalIsOpen" x-transition.opacity.duration.200ms x-trap.inert.noscroll="modalIsOpen"
-                @keydown.esc.window="modalIsOpen = false" @click.self="modalIsOpen = false"
-                class="fixed inset-0 z-30 flex items-center justify-center bg-black/20 lg:p-32 pb-8 backdrop-blur-md sm:items-center p-4"
-                role="dialog" aria-modal="true" aria-labelledby="defaultModalTitle">
-                <!-- Modal Dialog -->
-                <div x-show="modalIsOpen"
-                    x-transition:enter="transition ease-out duration-200 delay-100 motion-reduce:transition-opacity"
-                    x-transition:enter-start="opacity-0 scale-50" x-transition:enter-end="opacity-100 scale-100"
-                    class="flex w-fit h-fit flex-col gap-4 overflow-hidden rounded-md  justify-center items-center">
-                    <img :src="mediaSrc" alt="Tour Image" class="w-full max-h-[80%] object-contain ">
-                </div>
+        <div x-cloak x-show="modalIsOpen" x-transition.opacity.duration.200ms x-trap.inert.noscroll="modalIsOpen"
+            @keydown.esc.window="modalIsOpen = false" @click.self="modalIsOpen = false"
+            class="fixed inset-0 w-full h-full z-50 flex items-center justify-center bg-black/20 lg:p-24 pb-8 backdrop-blur-md sm:items-center p-4"
+            role="dialog" aria-modal="true" aria-labelledby="defaultModalTitle">
+            <div @click="modalIsOpen = false" class="absolute top-0 right-0">
+                <svg class="fill-slate-600 w-14 aspect-square" viewBox="0 -0.5 25 25"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <path
+                            d="M6.96967 16.4697C6.67678 16.7626 6.67678 17.2374 6.96967 17.5303C7.26256 17.8232 7.73744 17.8232 8.03033 17.5303L6.96967 16.4697ZM13.0303 12.5303C13.3232 12.2374 13.3232 11.7626 13.0303 11.4697C12.7374 11.1768 12.2626 11.1768 11.9697 11.4697L13.0303 12.5303ZM11.9697 11.4697C11.6768 11.7626 11.6768 12.2374 11.9697 12.5303C12.2626 12.8232 12.7374 12.8232 13.0303 12.5303L11.9697 11.4697ZM18.0303 7.53033C18.3232 7.23744 18.3232 6.76256 18.0303 6.46967C17.7374 6.17678 17.2626 6.17678 16.9697 6.46967L18.0303 7.53033ZM13.0303 11.4697C12.7374 11.1768 12.2626 11.1768 11.9697 11.4697C11.6768 11.7626 11.6768 12.2374 11.9697 12.5303L13.0303 11.4697ZM16.9697 17.5303C17.2626 17.8232 17.7374 17.8232 18.0303 17.5303C18.3232 17.2374 18.3232 16.7626 18.0303 16.4697L16.9697 17.5303ZM11.9697 12.5303C12.2626 12.8232 12.7374 12.8232 13.0303 12.5303C13.3232 12.2374 13.3232 11.7626 13.0303 11.4697L11.9697 12.5303ZM8.03033 6.46967C7.73744 6.17678 7.26256 6.17678 6.96967 6.46967C6.67678 6.76256 6.67678 7.23744 6.96967 7.53033L8.03033 6.46967ZM8.03033 17.5303L13.0303 12.5303L11.9697 11.4697L6.96967 16.4697L8.03033 17.5303ZM13.0303 12.5303L18.0303 7.53033L16.9697 6.46967L11.9697 11.4697L13.0303 12.5303ZM11.9697 12.5303L16.9697 17.5303L18.0303 16.4697L13.0303 11.4697L11.9697 12.5303ZM13.0303 11.4697L8.03033 6.46967L6.96967 7.53033L11.9697 12.5303L13.0303 11.4697Z"
+                            fill="#000000"></path>
+                    </g>
+                </svg>
             </div>
+            <!-- Modal Dialog -->
+            <div x-show="modalIsOpen"
+                x-transition:enter="transition ease-out duration-200 delay-100 motion-reduce:transition-opacity"
+                x-transition:enter-start="opacity-0 scale-50" x-transition:enter-end="opacity-100 scale-100"
+                class="flex w-fit h-fit flex-col gap-4 overflow-hidden rounded-md  justify-center items-center">
+                <img :src="mediaSrc" alt="Tour Image" class="w-full h-full object-contain ">
+            </div>
+        </div>
+        <main class="min-h-screen">
+            <x-auth-session-status class="mb-4" :status="session('status')" />
+
             <section id="hero" class="hero relative bg-cover bg-center text-white h-[130vh] lg:h-full"
                 style="background-image: url('{{ asset('storage/' . ($siteInfo->landing_image ?? 'background/background_13.jpg')) }}');">
                 <div class="absolute inset-0 bg-black opacity-45"></div>
@@ -235,7 +248,8 @@
                             @foreach ($ratings as $rating)
                                 <div class="w-full mx-auto" data-aos="fade-right" data-aos-duration="1000"
                                     data-aos-once="true">
-                                    <div class="card bg-base-100 mt-4 shadow-md p-5 min-h-[17rem]">
+                                    <div
+                                        class="card bg-base-100 mt-4 border border-slate-200 rounded-md shadow-md p-5 min-h-[17rem]">
                                         <div class="flex mt-3 justify-start space-x-2">
                                             <img class="rounded-full"
                                                 src="{{ $rating->image ?? 'https://via.placeholder.com/100' }}"
