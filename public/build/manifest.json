@@ -1,0 +1,88 @@
+{
+  "__commonjsHelpers-Cpj98o6Y.js": {
+    "file": "assets/_commonjsHelpers-Cpj98o6Y.js",
+    "name": "_commonjsHelpers"
+  },
+  "_aos-!~{009}~.js": {
+    "file": "assets/aos-B0a9OMnn.css",
+    "src": "_aos-!~{009}~.js"
+  },
+  "_aos-D4VQsHxb.js": {
+    "file": "assets/aos-D4VQsHxb.js",
+    "name": "aos",
+    "imports": [
+      "__commonjsHelpers-Cpj98o6Y.js"
+    ],
+    "css": [
+      "assets/aos-B0a9OMnn.css"
+    ]
+  },
+  "_embla-carousel.esm-v-CXq_RL.js": {
+    "file": "assets/embla-carousel.esm-v-CXq_RL.js",
+    "name": "embla-carousel.esm"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-DIDvvvJL.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/css/guest.css": {
+    "file": "assets/guest-Bj5xH1lj.css",
+    "src": "resources/css/guest.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-B1e2rLsL.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "imports": [
+      "_aos-D4VQsHxb.js",
+      "__commonjsHelpers-Cpj98o6Y.js"
+    ]
+  },
+  "resources/js/guest.js": {
+    "file": "assets/guest-BHwrzQJg.js",
+    "name": "guest",
+    "src": "resources/js/guest.js",
+    "isEntry": true,
+    "imports": [
+      "_aos-D4VQsHxb.js",
+      "__commonjsHelpers-Cpj98o6Y.js"
+    ]
+  },
+  "resources/js/homepage-plugin.js": {
+    "file": "assets/homepage-plugin-j9lfD1LN.js",
+    "name": "homepage-plugin",
+    "src": "resources/js/homepage-plugin.js",
+    "isEntry": true,
+    "imports": [
+      "_embla-carousel.esm-v-CXq_RL.js"
+    ]
+  },
+  "resources/js/order-plugin.js": {
+    "file": "assets/order-plugin-XUTFh3mA.js",
+    "name": "order-plugin",
+    "src": "resources/js/order-plugin.js",
+    "isEntry": true,
+    "imports": [
+      "__commonjsHelpers-Cpj98o6Y.js",
+      "_embla-carousel.esm-v-CXq_RL.js"
+    ],
+    "css": [
+      "assets/order-plugin-C7s3BGlm.css"
+    ]
+  },
+  "resources/js/tiptap.js": {
+    "file": "assets/tiptap-D6ULDKIW.js",
+    "name": "tiptap",
+    "src": "resources/js/tiptap.js",
+    "isEntry": true
+  },
+  "resources/js/transaction.js": {
+    "file": "assets/transaction-l0sNRNKZ.js",
+    "name": "transaction",
+    "src": "resources/js/transaction.js",
+    "isEntry": true
+  }
+}
