@@ -29,7 +29,9 @@ class ArticleController extends Controller
             return $query->where('slug', 'like', "%{$search}%")
                 ->orWhere('short_descriptions', 'like', "%{$search}%")
                 ->orWhere('detailed_description', 'like', "%{$search}%");
-        })->paginate($pageSize ?? 6);
+        })
+        ->orderBy('created_at', 'desc')
+        ->paginate($pageSize ?? 6);
         
         return view('pages.article-index', ['articles' => $articles]);
     }

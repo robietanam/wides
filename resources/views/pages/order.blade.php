@@ -61,7 +61,7 @@
                         </h3>
 
                         <div
-                            class="container border border-neutral-500 border-opacity-30  bg-white md:shadow-md rounded-md p-5">
+                            class="container border border-slate-600 border-opacity-30  bg-white md:shadow-md rounded-md p-5">
                             <div class="border-b border-base-dark">
 
                                 <div class="flex flex-col md:flex-row">
@@ -312,7 +312,7 @@
                                 Ringkasan Pesanan</h3>
                             <div class="flex justify-center items-center mt-8 md:-mt-0">
                                 <div
-                                    class="container p-6 max-w-lg bg-white border border-neutral-500 border-opacity-30 rounded-lg shadow-lg">
+                                    class="container p-6 max-w-lg bg-white border border-slate-600 border-opacity-30 rounded-lg shadow-lg">
 
                                     <div class="mb-4 text-gray-700">
                                         <p class="text-sm font-medium">Nama Pemesan</p>
