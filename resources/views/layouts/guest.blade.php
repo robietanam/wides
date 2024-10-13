@@ -5,10 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <link rel="icon" href="/favicon.ico">
     <title>
         @if (isset($title))
-        {{ $title }}
+            {{ $title }}
         @endif
         | {{ config('app.name') }}
     </title>
@@ -45,8 +45,7 @@
     @vite(['resources/css/guest.css', 'resources/js/guest.js'])
 </head>
 
-<body x-data="{ loading: true, isDarkmode: false }" x-init="window.onload = () => loading = false"
-    :class="{ 'overflow-hidden': loading }"
+<body x-data="{ loading: true, isDarkmode: false }" x-init="window.onload = () => loading = false" :class="{ 'overflow-hidden': loading }"
     class="font-sans text-gray-900 antialiased dark:text-base-dark dark:bg-base-dark">
 
     <!-- Elemen Loading -->
