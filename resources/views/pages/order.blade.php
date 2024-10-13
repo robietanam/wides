@@ -29,8 +29,7 @@
                     frameborder="0"></iframe>
             </div>
         </div>
-        <section
-            class="relative z-10 lg:pt-20 after:contents-[''] after:absolute after:z-0 after:h-full xl:after:w-1/3 after:top-0 after:right-0 after:bg-gray-50">
+        <section class="relative z-10 lg:pt-20 ">
             <div class="w-full max-w-7xl md:px-5 lg:px-6 mx-auto relative ">
                 <div x-data="ticketApp({{ $tourPackage->price }}, {{ $tourPackage->discount }}, '{{ $tourPackage->name }}', '{{ csrf_token() }}', '{{ route('order.store') }}', {{ $payment }}, {{ $user }})" class="grid grid-cols-12">
 

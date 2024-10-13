@@ -8,7 +8,7 @@
 
             <div class="px-[2rem] py-[1rem] border border-slate-300 rounded-md w-full max-w-[66rem] bg-[#f4f4f4]">
                 <div class="tiptap-editor ">
-                    <div class="ProseMirror">
+                    <div class="ProseMirror ">
                         <div class="flex flex-col items-center gap-4">
                             <p class="self-start font-semibold text-4xl">{{ $article->slug }}</p>
                             <img src="{{ asset('storage/' . $article->thumbnail) ?? 'https://placehold.co/600x400?text=' . urlencode($article->slug) }}"

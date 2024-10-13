@@ -3,8 +3,7 @@
     <div>
         <x-navbar-guest :navbarAlwaysVisible="true" shadowStrength="md" />
 
-        <section
-            class="relative z-10 lg:mt-20 after:contents-[''] after:absolute after:z-0 after:h-full xl:after:w-1/3 after:top-0 after:right-0 after:bg-gray-50">
+        <section class="relative z-10 lg:mt-20 ">
             <div x-data="transactionApp('{{ $payment->account_number ?? 0 }}', '{{ $transaction->transaction_code }}')" class="w-full max-w-7xl md:px-5 lg:px-6 mx-auto relative z-10">
                 <div class="grid grid-cols-12 ">
                     <h3
