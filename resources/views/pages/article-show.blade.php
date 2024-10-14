@@ -124,6 +124,10 @@
                 --primary-900: #1e3a8a !important;
             }
 
+            .tiptap-editor .ProseMirror p {
+                text-align: justify;
+            }
+
             .tiptap-editor .ProseMirror table td,
             .tiptap-editor .ProseMirror table th {
                 border: 1px solid var(--gray-800);
