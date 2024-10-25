@@ -11,16 +11,19 @@
                 <!-- Filter Options -->
                 <div class="flex flex-wrap gap-2 items-center">
                     <a href="{{ url()->current() }}?filter=invoice"
-                        :class="{{ request()->query('filter') == 'invoice' }} ?
-                            'bg-primary text-white border-primary' :
-                            'bg-white text-black border-gray-300'"
-                        class="py-2 border rounded-lg text-sm px-5 transition-all focus:outline-none focus:ring focus:ring-primary focus:ring-opacity-50 hover:bg-primary hover:text-white">
+                        class="py-2 border rounded-lg text-sm px-5 transition-all focus:outline-none focus:ring focus:ring-primary focus:ring-opacity-50 hover:bg-primary hover:text-white
+                        {{ request()->query('filter') == 'invoice'
+                            ? 'bg-primary text-white border-primary'
+                            : 'bg-white text-black border-gray-300' }}
+                        ">
                         <span> Invoice </span>
                     </a>
                     <a href="{{ url()->current() }}?filter=completed"
-                        :class="{{ request()->query('filter') == 'completed' }} ? 'bg-primary text-white border-primary' :
-                            'bg-white text-black border-gray-300'"
-                        class="py-2 border rounded-lg text-sm px-5 transition-all focus:outline-none focus:ring focus:ring-primary focus:ring-opacity-50 hover:bg-primary hover:text-white">
+                        class="py-2 border rounded-lg text-sm px-5 transition-all focus:outline-none focus:ring focus:ring-primary focus:ring-opacity-50 hover:bg-primary hover:text-white
+                        {{ request()->query('filter') == 'completed'
+                            ? 'bg-primary text-white border-primary'
+                            : 'bg-white text-black border-gray-300' }}
+                        ">
                         <span> Berhasil </span>
                     </a>
                     <a href="{{ url()->current() }}?filter=semua"
