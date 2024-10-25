@@ -1,13 +1,14 @@
 @props(['name', 'image', 'price', 'description', 'features', 'isLoggedIn', 'discount'])
 <div
     class="carousel-item relative flex aspect-[9/12] w-96 shrink-0 snap-start flex-col justify-end overflow-hidden rounded-3xl shadow-lg">
-
-    <div class="absolute z-10 right-0 top-0 h-16 w-16">
-        <div
-            class="absolute transform rotate-45 {{ $discount <= 5 ? 'bg-green-600' : ($discount > 5 && $discount <= 10 ? 'bg-yellow-600' : 'bg-red-600') }} text-center text-white font-semibold py-1 right-[-35px] top-[32px] w-[170px]">
-            Diskon {{ round($discount) }}% !!
+    @if (!(is_null($discount) || $discount == 0))
+        <div class="absolute z-10 right-0 top-0 h-16 w-16">
+            <div
+                class="absolute transform rotate-45 {{ $discount <= 5 ? 'bg-green-600' : ($discount > 5 && $discount <= 10 ? 'bg-yellow-600' : 'bg-red-600') }} text-center text-white font-semibold py-1 right-[-35px] top-[32px] w-[170px]">
+                Diskon {{ round($discount) }}% !!
+            </div>
         </div>
-    </div>
+    @endif
     <img data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" src="{{ $image }}" alt="Package Image"
         class="absolute inset-0 h-full w-full object-cover" />
     <div class="absolute inset-0 rounded-3xl bg-gradient-to-t from-black from-25% inset-ring inset-ring-gray-950/10">
