@@ -34,12 +34,17 @@ class TourPackageResource extends Resource
                                 Forms\Components\TextInput::make('name')
                                     ->label('Nama Paket')
                                     ->required()
+                                    ->columnSpan('full')
                                     ->maxLength(255),
                                 Forms\Components\TextInput::make('price')
                                     ->label('Harga')
                                     ->numeric()
                                     ->prefix('IDR')
                                     ->maxValue(42949672.95),
+                                Forms\Components\TextInput::make('discount')
+                                    ->label('Diskon (1-100)')
+                                    ->numeric()
+                                    ->maxValue(100),
                                 Forms\Components\MarkdownEditor::make('description')
                                     ->label('Deskripsi')
                                     ->maxLength(65535)
