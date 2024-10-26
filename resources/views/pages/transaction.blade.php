@@ -157,9 +157,10 @@
                                 <p class="col-span-2">Rincian Pembayaran</p>
                                 <div
                                     class="col-span-2  max-md:col-span-3 grid grid-cols-2 gap-2 bg-blue-50 rounded-lg p-4">
-                                    <p>Harga (x{{ $transaction->quantity }} Tiket)</p>
+                                    <p>Harga</p>
                                     <p class="text-end">
-                                        {{ 'Rp ' . number_format($transaction->price, 0, ',', '.') }}</p>
+                                        {{ 'Rp ' . number_format($transaction->price, 0, ',', '.') }}
+                                        (x{{ $transaction->quantity }} Tiket)</p>
                                     <p>Diskon (-{{ $transaction->discount }}%)</p>
                                     <p class="text-end">
                                         {{ 'Rp ' . number_format(($transaction->discount / 100) * $transaction->price, 0, ',', '.') }}
