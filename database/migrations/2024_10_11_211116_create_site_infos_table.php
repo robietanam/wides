@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('landing_image')->nullable(); 
             $table->string('video_profile')->nullable(); 
             $table->json('gallery')->nullable();    
+            $table->string('landing_desc');
             $table->string('profile_title');
             $table->string('profile_desc');   
             $table->timestamps();

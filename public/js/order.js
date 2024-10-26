@@ -65,6 +65,7 @@ function ticketApp(ticketPrice, discount, packageId, crsfToken, urlPost, payment
             this.discountAmount = discountedPrice
         },
         init() {
+            console.log(payment)
             this.$watch('ticketQuantity', () => {
                 if (this.ticketQuantity > 30) {
                     alert('Jumlah tiket tidak boleh lebih dari 30.');

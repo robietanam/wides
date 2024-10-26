@@ -8,6 +8,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
 use Filament\Tables;
+use Illuminate\Validation\Rule;
 
 class PaymentMethodResource extends Resource
 {
@@ -30,7 +31,7 @@ class PaymentMethodResource extends Resource
                     ])
                     ->required(),
                 Forms\Components\TextInput::make('payment_name')
-                    ->unique()
+                    ->unique(ignoreRecord:true)
                     ->label('Nama Pembayaran'),
                 Forms\Components\TextInput::make('account_holder')
                     ->label('Atas Nama')

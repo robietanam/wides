@@ -19,6 +19,7 @@ class SiteInfo extends Model
         'landing_image',
         'video_profile',
         'gallery',
+        'landing_desc',
         'profile_title',
         'profile_desc',
     ];

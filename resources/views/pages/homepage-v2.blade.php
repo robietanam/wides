@@ -44,16 +44,8 @@
 
                             <div class="mb-10">
                                 <p class="text-sm md:text-lg font-sans animate-fadeInDown lg:w-3/6 hidden md:block">
-                                    Kami dengan senang hati menyambut Anda di Rumah Pintar Karangharjo, destinasi wisata
-                                    edukasi
-                                    yang menawarkan pengalaman unik dan menarik di daerah Jember.
+                                    {{ $siteInfo->landing_desc }}
                                 </p>
-                                <p class="mt-4 text-sm md:text-lg font-sans animate-fadeInDown w-5/6 md:hidden">
-                                    Selamat datang di Rumah Pintar Karangharjo, destinasi wisata edukasi unik dan
-                                    menarik di
-                                    Jember.
-                                </p>
-
                                 <div class="flex flex-wrap gap-5 mt-4 items-center animate-fadeInUp">
                                     <a href="#layanan"
                                         class="p-3 flex flex-row gap-1 justify-center items-center bg-white text-primary shadow-button hover:bg-primary hover:text-white transition-all duration-300 hover:animate-tiltHover">Order
@@ -251,11 +243,11 @@
                                     <div
                                         class="card bg-base-100 mt-4 border border-slate-200 rounded-md shadow-md p-5 min-h-[17rem]">
                                         <div class="flex mt-3 justify-start space-x-2">
-                                            <img class="rounded-full"
-                                                src="{{ $rating->image ?? 'https://via.placeholder.com/100' }}"
+                                            <img class="rounded-full w-28 aspect-square object-cover"
+                                                src="{{ $rating->image ? asset('storage/' . $rating->image) : 'https://via.placeholder.com/100' }}"
                                                 alt="{{ $rating->name }}">
                                             <div>
-                                                <h4 class="text-lg font-semibold ml-1">Hanif Pandu Nugroho</h4>
+                                                <h4 class="text-lg font-semibold ml-1">{{ $rating->name }}</h4>
                                                 <div class="flex space-x-1 mt-2">
                                                     @for ($i = 1; $i <= 5; $i++)
                                                         @if ($i <= $rating->stars)

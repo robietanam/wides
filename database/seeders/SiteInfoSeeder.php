@@ -24,6 +24,7 @@ class SiteInfoSeeder extends Seeder
             'landing_image' => 'background/background_13.jpg',
             'video_profile' => 'https://www.youtube.com/watch?v=tW5AGeQ_D-c',
             'gallery'=> ['background/background_1.png','background/background_5.png','background/background_8.png'],
+            'landing_desc' => 'Kami dengan senang hati menyambut Anda di Rumah Pintar Karangharjo, destinasi wisata edukasi yang menawarkan pengalaman unik dan menarik di daerah Jember.',
             'profile_title' => 'Berkomitmen pada Pembelajaran Berkelanjutan',
             'profile_desc' => 'Ini adalah bagian deskripsi tentang kami. Anda bisa menjelaskan visi misi, nilai-nilai, atau informasi penting lainnya tentang perusahaan atau organisasi Anda. Pastikan deskripsinya informatif dan menarik bagi pengunjung website Anda.',
         ]);

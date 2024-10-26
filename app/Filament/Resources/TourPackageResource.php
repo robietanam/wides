@@ -76,12 +76,12 @@ class TourPackageResource extends Resource
                                 ->required()
                                 ->columnSpan('full'),
                                 Forms\Components\Repeater::make('images')
-                                ->relationship('images')
-                                ->label('Galeri')
-                                ->schema([
-                                    Forms\Components\FileUpload::make('image_url')
-                                        ->image()
-                                        ->required(),
+                                    ->relationship('images')
+                                    ->label('Galeri')
+                                    ->schema([
+                                        Forms\Components\FileUpload::make('image_url')
+                                            ->image()
+                                            ->required(),
                                 ]),
                                 Forms\Components\Repeater::make('videos')
                                     ->relationship('videos')

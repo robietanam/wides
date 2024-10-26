@@ -238,7 +238,6 @@
                             <!-- Payment Selection -->
                             <div class="mt-5 mb-10 col-span-12 mx-5 md:-mx-0">
                                 <h3 class="font-semibold mb-4 text-lg text-base-dark">Metode Pembayaran</h3>
-                                <p x-text="paymentMethod"></p>
                                 <div class="space-y-5">
                                     <template x-for="(types, index) in paymentMethods" :key="index">
                                         <div>
@@ -252,8 +251,8 @@
                                                         class="h-5 aspect-square" />
                                                 </div>
                                             </button>
-                                            <div class="mt-3">
-                                                <template x-for="method in types" :key="method.id">
+                                            <div class="mt-3 flex flex-col gap-2">
+                                                <template x-for="(method, _index) in types" :key="_index">
                                                     <div x-show="openIndex === index" x-transition>
                                                         <label
                                                             :class="{

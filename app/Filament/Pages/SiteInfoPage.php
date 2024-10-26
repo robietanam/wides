@@ -35,6 +35,7 @@ class SiteInfoPage extends Page implements HasForms
     {
         return $form
         ->schema([
+            TextInput::make('landing_desc')->label('Deskripsi Landing Page')->required(),
             TextInput::make('profile_title')->label('Judul Profile')->required(),
             Textarea::make('profile_desc')->label('Deskripsi Profile')->required(),
             TextInput::make('address')->label('Alamat')->required(),
@@ -52,17 +53,25 @@ class SiteInfoPage extends Page implements HasForms
             TextInput::make('video_profile')
                 ->label('Video Profile (YouTube URL)')
                 ->url(),
-            Repeater::make('gallery')
-            ->label('Galeri')
-            ->schema([
-                FileUpload::make('')
-                    ->image()
-                    ->directory('background')
-                    ->preserveFilenames()
-                    ->label('Gallery')
-                    ->disk('public')
-                    ->required(),
-            ]),
+            FileUpload::make('gallery')
+                ->image()
+                ->directory('background')
+                ->preserveFilenames()
+                ->label('Gallery (min 3)')
+                ->disk('public')
+                ->multiple()
+                ->required(),
+            // Repeater::make('gallery')
+            // ->label('Galeri')
+            // ->schema([
+            //     FileUpload::make('')
+            //         ->image()
+            //         ->directory('background')
+            //         ->preserveFilenames()
+            //         ->label('Gallery')
+            //         ->disk('public')
+            //         ->required(),
+            // ]),
         ])
         ->statePath('data');
     } 
