@@ -41,16 +41,17 @@
                                     <div class="p-5">
                                         <div class="flex flex-col md:flex-row">
                                             <div class="sticky top-0 md:static lg:w-10/12 lg:h-1/2 lg:rounded-lg z-0">
-                                                <img src="{{ asset('storage/' . $tourPackage->images->first()?->image_url) ?? 'https://placehold.co/600x400?text=' . urlencode($tourPackage->name) }}"
+                                                <img src="{{ asset('storage/' . $tourPackage->image_icon) ?? 'https://placehold.co/600x400?text=' . urlencode($tourPackage->name) }}"
                                                     alt="Gambar {{ $tourPackage->name }}"
                                                     class="w-full h-auto lg:rounded-lg">
                                             </div>
-                                            <div class="px-4 bg-white rounded-t-xl py-5 -mt-5 z-10">
+                                            <div class="px-4 bg-white rounded-t-xl py-5 -mt-5 z-10 md:w-[90%]">
                                                 <h3 class="font-bold text-green-500 text-sm">Paket Pilihan Anda</h3>
-                                                <h3 class="font-semibold text-xl mb-2">Paket Wisata
+                                                <h3 class="font-semibold text-xl mb-2">
                                                     {{ $tourPackage->name }}
                                                 </h3>
-                                                <p class="text-gray-500 text-sm mb-3">{{ $tourPackage->description }}
+                                                <p class="text-gray-500 text-sm mb-3 text-justify">
+                                                    {{ $tourPackage->description }}
                                                 </p>
                                             </div>
                                         </div>

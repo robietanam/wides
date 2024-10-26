@@ -79,7 +79,7 @@
                                         <img src="{{ asset('storage/' . $tourPackage->image_icon) ?? 'https://placehold.co/600x400?text=' . urlencode($tourPackage->name) }}"
                                             alt="Gambar {{ $tourPackage->name }}" class="w-full h-auto lg:rounded-lg">
                                     </div>
-                                    <div class="px-4 bg-white rounded-t-xl py-5 -mt-5 z-10">
+                                    <div class="px-4 bg-white rounded-t-xl py-5 -mt-5 z-10 md:w-[90%]">
                                         <h3 class="font-bold text-green-500 text-sm">Paket Pilihan Anda</h3>
                                         <h3 class="font-semibold text-xl mb-2">Paket Wisata {{ $tourPackage->name }}
                                         </h3>
