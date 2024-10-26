@@ -42,7 +42,7 @@ class TourPackageResource extends Resource
                                     ->prefix('IDR')
                                     ->maxValue(42949672.95),
                                 Forms\Components\TextInput::make('discount')
-                                    ->label('Diskon (1-100)')
+                                    ->label('Diskon (0-100)')
                                     ->numeric()
                                     ->maxValue(100),
                                 Forms\Components\MarkdownEditor::make('description')
