@@ -57,10 +57,10 @@ class TourPackageSales extends ChartWidget
                 tour_packages.name as package_name,
                 SUM(quantity) as total_quantity
             ')
-            ->join('tour_packages', 'package_name', '=', 'tour_packages.name')
+            ->join('tour_packages', 'package_id', '=', 'tour_packages.id')
             ->whereBetween('transactions.transaction_date', [$startOfYear, $endOfMonth])
             ->where('transactions.status', 'completed')
-            ->groupBy('month', 'tour_packages.name')
+            ->groupBy('month', 'tour_packages.name', )
             ->get()
             ->groupBy('month')
             ->mapWithKeys(function ($items, $month) {
