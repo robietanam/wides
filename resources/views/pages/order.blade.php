@@ -416,12 +416,14 @@
                                         </div>
                                         <div class="flex justify-between mb-2">
                                             <p class="text-sm">Harga</p>
-                                            <p class="font-semibold" x-text="ticketPrice.toLocaleString('id-ID')"></p>
+                                            <p class="font-semibold"
+                                                x-text="ticketPrice.toLocaleString('id-ID') + '(x' + ticketQuantity + ')'">
+                                            </p>
                                         </div>
                                         <div class="flex justify-between mb-4" x-show="discount">
                                             <p class="text-sm">Diskon (<span x-text="discount + '%'"></span>)</p>
                                             <p class="font-semibold">- <span
-                                                    x-text="(ticketPrice * discount / 100).toLocaleString('id-ID')"></span>
+                                                    x-text="(ticketPrice * discount / 100 * ticketQuantity).toLocaleString('id-ID')"></span>
                                             </p>
                                         </div>
                                         <div class="border-t border-gray-200 pt-4">
@@ -429,8 +431,7 @@
                                                 <p>Total Harga</p>
                                                 <p class="text-blue-600">
                                                     <span>Rp.</span>
-                                                    <span
-                                                        x-text="(ticketPrice - (ticketPrice * discount / 100)).toLocaleString('id-ID')"></span>
+                                                    <span x-text="amount.toLocaleString('id-ID')"></span>
                                                 </p>
                                             </div>
                                         </div>

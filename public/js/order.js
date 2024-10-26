@@ -49,6 +49,7 @@ function ticketApp(ticketPrice, discount, packageId, crsfToken, urlPost, payment
         errorMessage: 'Terjadi Kesalahan',
         tanggalKunjungan: dates[0].value,
         ticketPrice: ticketPrice,
+        discountAmount: discount,
         amount: ticketPrice,
         discount: discount,
         packageId: packageId,
@@ -61,6 +62,7 @@ function ticketApp(ticketPrice, discount, packageId, crsfToken, urlPost, payment
         updateAmount() {
             const discountedPrice = this.ticketPrice - (this.ticketPrice * this.discount / 100);
             this.amount = discountedPrice * this.ticketQuantity;
+            this.discountAmount = discountedPrice
         },
         init() {
             this.$watch('ticketQuantity', () => {
