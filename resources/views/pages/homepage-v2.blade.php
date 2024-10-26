@@ -36,14 +36,14 @@
 
                     <div class=" lg:py-20 max-w-7xl h-[50vh] lg:h-[90vh] z-20">
                         <h1
-                            class="text-6xl font-hero md:text-8xl tracking-wider font-normal leading-tight animate-fadeInScale w-full lg:w-3/6 mt-10 lg:mt-20">
+                            class="text-6xl font-hero md:text-8xl tracking-wider font-normal leading-tight animate-fadeInScale w-full lg:w-3/6 mt-10 pt-32 lg:mt-20">
                             Wisata Desa Karangharjo
                         </h1>
 
                         <div class="flex justify-between flex-col lg:flex-row">
 
                             <div class="mb-10">
-                                <p class="text-sm md:text-lg font-sans animate-fadeInDown lg:w-3/6 hidden md:block">
+                                <p class="text-sm md:text-lg font-sans animate-fadeInDown lg:w-3/6 ">
                                     {{ $siteInfo->landing_desc }}
                                 </p>
                                 <div class="flex flex-wrap gap-5 mt-4 items-center animate-fadeInUp">
