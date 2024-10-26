@@ -22,9 +22,9 @@
                         x-transition:leave-start="opacity-100 transform translate-x-0"
                         x-transition:leave-end="opacity-0 transform -translate-x-full">
                         <div
-                            class="container border border-slate-600 border-opacity-30 bg-white md:shadow-md rounded-md p-5 max-md:p-0">
-                            <div>
-                                <div class="navbar fixed top-0 left-0 right-0 z-50 bg-transparent sm:block  lg:hidden">
+                            class=" w-full h-full border border-slate-600 border-opacity-30 bg-white md:shadow-md rounded-md overflow-hidden  max-md:p-0">
+                            <div class="w-full h-full">
+                                <div class="navbar fixed top-0 left-0 right-0 z-50 bg-transparent sm:block lg:hidden">
                                     <div class="flex-none">
                                         <button @click="history.back()"
                                             class="bg-base-100 bg-opacity-80 rounded-full text-white font-semibold">
@@ -37,31 +37,43 @@
                                         </button>
                                     </div>
                                 </div>
-                                <div class="flex flex-col md:flex-row">
-                                    <div class="sticky top-0 md:static lg:w-10/12 lg:h-1/2 lg:rounded-lg z-0">
-                                        <img src="{{ asset('storage/' . $tourPackage->images->first()?->image_url) ?? 'https://placehold.co/600x400?text=' . urlencode($tourPackage->name) }}"
-                                            alt="Gambar {{ $tourPackage->name }}" class="w-full h-auto lg:rounded-lg">
+                                @if ($tourPackage)
+                                    <div class="p-5">
+                                        <div class="flex flex-col md:flex-row">
+                                            <div class="sticky top-0 md:static lg:w-10/12 lg:h-1/2 lg:rounded-lg z-0">
+                                                <img src="{{ asset('storage/' . $tourPackage->images->first()?->image_url) ?? 'https://placehold.co/600x400?text=' . urlencode($tourPackage->name) }}"
+                                                    alt="Gambar {{ $tourPackage->name }}"
+                                                    class="w-full h-auto lg:rounded-lg">
+                                            </div>
+                                            <div class="px-4 bg-white rounded-t-xl py-5 -mt-5 z-10">
+                                                <h3 class="font-bold text-green-500 text-sm">Paket Pilihan Anda</h3>
+                                                <h3 class="font-semibold text-xl mb-2">Paket Wisata
+                                                    {{ $tourPackage->name }}
+                                                </h3>
+                                                <p class="text-gray-500 text-sm mb-3">{{ $tourPackage->description }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="mx-3 lg:-mx-0 md:mt-3">
+                                            <div class="bg-blue-50 rounded-md p-3 mb-3">
+                                                <h3>Benefit</h3>
+                                                <ul class="list-disc list-inside text-sm">
+                                                    @foreach ($tourPackage->services as $service)
+                                                        <li class="flex items-center gap-3">
+                                                            <i class="fas fa-check-circle text-success text-lg"></i>
+                                                            <span
+                                                                class="text-sm lg:text-base">{{ $service->name }}</span>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="px-4 bg-white rounded-t-xl py-5 -mt-5 z-10">
-                                        <h3 class="font-bold text-green-500 text-sm">Paket Pilihan Anda</h3>
-                                        <h3 class="font-semibold text-xl mb-2">Paket Wisata {{ $tourPackage->name }}
-                                        </h3>
-                                        <p class="text-gray-500 text-sm mb-3">{{ $tourPackage->description }}</p>
+                                @else
+                                    <div class="flex justify-center items-center w-full h-full bg-slate-100">
+                                        <p class="text-xl font-semibold text-red-400 py-10">Paket Tidak Ditemukan</p>
                                     </div>
-                                </div>
-                                <div class="mx-3 lg:-mx-0 md:mt-3">
-                                    <div class="bg-blue-50 rounded-md p-3 mb-3">
-                                        <h3>Benefit</h3>
-                                        <ul class="list-disc list-inside text-sm">
-                                            @foreach ($tourPackage->services as $service)
-                                                <li class="flex items-center gap-3">
-                                                    <i class="fas fa-check-circle text-success text-lg"></i>
-                                                    <span class="text-sm lg:text-base">{{ $service->name }}</span>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -353,7 +365,7 @@
             window.addEventListener('DOMContentLoaded', function() {
                 // var myCalendar = document.getElementById("my-calendar");
                 // var myCalendar = jsCalendar.new(myCalendar);
-                const formattedDate = new Date("{{ $transaction->transaction_date }}");
+                const formattedDate = new Date("{{ $transaction->visit_date }}");
                 // myCalendar.set(formattedDate.toLocaleDateString('en-GB'))
                 var options = {
                     weekday: 'long',

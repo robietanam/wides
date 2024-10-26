@@ -33,7 +33,7 @@ class TransactionController extends Controller
             abort(411, 'Transaksi Tidak Ditemukan');
         }
 
-        $tourPackage = TourPackage::where('name', $transaction->package_name)->first();
+        $tourPackage = TourPackage::where('id', $transaction->package_id)->first();
 
         $payment = PaymentMethod::where('payment_name', $transaction->payment_method)
                                     ->where('isActivated', true)

@@ -31,7 +31,7 @@
         </div>
         <section class="relative z-10 lg:pt-20 ">
             <div class="w-full max-w-7xl md:px-5 lg:px-6 mx-auto relative ">
-                <div x-data="ticketApp({{ $tourPackage->price }}, {{ $tourPackage->discount }}, '{{ $tourPackage->name }}', '{{ csrf_token() }}', '{{ route('order.store') }}', {{ $payment }}, {{ $user }})" class="grid grid-cols-12">
+                <div x-data="ticketApp({{ $tourPackage->price }}, {{ $tourPackage->discount }}, '{{ $tourPackage->id }}', '{{ csrf_token() }}', '{{ route('order.store') }}', {{ $payment }}, {{ $user }})" class="grid grid-cols-12">
 
                     <div x-show="showErrorToast" role="alert"
                         class="alert alert-error fixed top-5 right-5 w-fit z-50 flex flex-row">

@@ -1,4 +1,4 @@
-function ticketApp(ticketPrice, discount, packageName, crsfToken, urlPost, payment, user) {
+function ticketApp(ticketPrice, discount, packageId, crsfToken, urlPost, payment, user) {
     const today = new Date();
     const dates = Array.from({ length: 5 }, (_, i) => {
         const date = new Date(today);
@@ -51,7 +51,7 @@ function ticketApp(ticketPrice, discount, packageName, crsfToken, urlPost, payme
         ticketPrice: ticketPrice,
         amount: ticketPrice,
         discount: discount,
-        packageName: packageName,
+        packageId: packageId,
         dates,
         paymentMethod: null,
         paymentName: null,
@@ -110,7 +110,7 @@ function ticketApp(ticketPrice, discount, packageName, crsfToken, urlPost, payme
                 ticket_quantity: this.ticketQuantity,
                 payment: this.paymentMethod,
                 visit_date: parseDate(this.tanggalKunjungan),
-                name_package: this.packageName,
+                package_id: this.packageId,
             };
             this.loading = true;
             this.currentStep = 3;
@@ -125,11 +125,12 @@ function ticketApp(ticketPrice, discount, packageName, crsfToken, urlPost, payme
                 body: JSON.stringify(data)
             })
                 .then(response => {
+
+                    console.log(data)
                     console.log(response)
                     return response.json();
                 })
                 .then(resp => {
-
                     this.loading = false
                     if (resp.success) {
                         this.currentStep = 4;

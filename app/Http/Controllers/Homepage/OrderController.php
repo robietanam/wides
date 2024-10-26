@@ -79,7 +79,7 @@ class OrderController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email',
             'noTelp' => 'required|string',
-            'name_package' => 'required|string|exists:tour_packages,name',
+            'package_id' => 'required',
             'ticket_quantity' => 'required|integer|min:1|max:30',
             'payment' => 'required|string',
             'visit_date' => 'required|date',
@@ -91,9 +91,7 @@ class OrderController extends Controller
             'email.email' => 'Format email tidak valid.',
             'noTelp.required' => 'Nomor telepon harus diisi.',
             'noTelp.string' => 'Nomor telepon harus berupa teks.',
-            'name_package.required' => 'Nama paket harus diisi.',
-            'name_package.string' => 'Nama paket harus berupa teks.',
-            'name_package.exists' => 'Nama paket tidak tersedia.',
+            'package_id.required' => ' paket harus diisi.',
             'ticket_quantity.required' => 'Jumlah tiket harus diisi.',
             'ticket_quantity.integer' => 'Jumlah tiket harus berupa angka.',
             'ticket_quantity.min' => 'Jumlah tiket minimal adalah 1.',
@@ -104,7 +102,7 @@ class OrderController extends Controller
             'visit_date.date' => 'Tanggal kunjungan tidak valid.',
         ]);
         try {
-            $tourPackage = TourPackage::where('name', $validatedData['name_package'])->firstOrFail();
+            $tourPackage = TourPackage::where('id', $validatedData['package_id'])->firstOrFail();
             $validatedData['visit_date'] = Carbon::parse($validatedData['visit_date'])->toDateString();
  
             $transaction = Transaction::create([
@@ -118,7 +116,7 @@ class OrderController extends Controller
                 'discount' => $tourPackage->discount, 
                 'quantity' => $validatedData['ticket_quantity'],
                 'price' => $tourPackage->price,
-                'package_name' => $validatedData['name_package'],
+                'package_id' => $validatedData['package_id'],
                 
             ]);
 

@@ -32,7 +32,7 @@ class Transaction extends Model
         'discount',
         'price',
         'quantity',
-        'package_name', // This will store the package name for this transaction
+        'package_id', // This will store the package name for this transaction
         'transaction_date'
     ];
     public function user()
@@ -47,7 +47,7 @@ class Transaction extends Model
 
     public function tourPackage()
     {
-        return $this->belongsTo(TourPackage::class, 'package_name', 'name'); // Foreign key and local key
+        return $this->belongsTo(TourPackage::class, 'package_id', 'id'); // Foreign key and local key
     }
 
     public function tickets(): HasMany

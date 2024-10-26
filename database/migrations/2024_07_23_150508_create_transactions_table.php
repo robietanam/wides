@@ -32,7 +32,7 @@ return new class extends Migration {
 
            $table->double('price')->default(0);
 
-           $table->string('package_name')->default('');
+           $table->string('package_id');
 
            $table->timestamp('transaction_date')->useCurrent();
 

@@ -38,7 +38,7 @@ class TourPackage extends Model
 
     public function transactions()
     {
-        return $this->hasMany(Transaction::class, 'package_name', 'name'); 
+        return $this->hasMany(Transaction::class, 'package_id', 'id'); 
     }
 
     public function videos(): HasMany

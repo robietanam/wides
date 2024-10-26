@@ -17,8 +17,8 @@ class TourPackageSeeder extends Seeder
     public function run(): void
     {
         TourPackage::create([
-            'name' => 'Agroteknologi',
-            'description' => 'Jelajahi dunia pertanian modern! Pelajari teknik terbaru dalam hidroponik, vertikultur, dan budidaya tanaman dengan teknologi canggih.',
+            'name' => 'Paket Wisata Paket Eduwisata 1',
+            'description' => 'Paket Eduwisata 1 menawarkan pengalaman edukatif tentang budidaya hidroponik dan maggot. Dalam paket ini, peserta akan mempelajari dasar-dasar hidroponik, termasuk cara menanam dengan metode semai, dan proses pengelolaan maggot sebagai pakan alami yang ramah lingkungan. Selain itu, peserta juga akan berkesempatan memanen maggot secara langsung, memberikan pengalaman praktis dalam dunia pertanian dan pengelolaan sampah organik.',
             'is_visible' => true,
             'price' => 10000,
             'image_icon' => 'background/background_1.png',
@@ -27,8 +27,8 @@ class TourPackageSeeder extends Seeder
         ]);
 
         TourPackage::create([
-            'name' => 'Peternakan Modern',
-            'description' => 'Temukan inovasi di dunia peternakan! Saksikan langsung sistem kandang tertutup, teknologi pakan otomatis, dan manajemen kesehatan hewan modern.',
+            'name' => 'Paket Wisata Paket Eduwisata 2',
+            'description' => 'Paket ini memberikan pengalaman belajar menyeluruh tentang hidroponik dan budidaya maggot. Peserta akan menerima edukasi lengkap mengenai teknik hidroponik, dilanjutkan dengan praktik langsung serta tur di area green house untuk melihat prosesnya lebih dekat. Selain itu, peserta akan diajak mengikuti tur kandang maggot, dengan kesempatan langsung untuk memanen maggot. Paket ini juga dilengkapi dengan makanan berat, memberikan pengalaman eduwisata yang interaktif dan memuaskan.',
             'is_visible' => true,
             'price' => 10000,
             'image_icon' => 'background/background_5.png',
