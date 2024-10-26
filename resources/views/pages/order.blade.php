@@ -81,9 +81,9 @@
                                     </div>
                                     <div class="px-4 bg-white rounded-t-xl py-5 -mt-5 z-10 md:w-[90%]">
                                         <h3 class="font-bold text-green-500 text-sm">Paket Pilihan Anda</h3>
-                                        <h3 class="font-semibold text-xl mb-2">Paket Wisata {{ $tourPackage->name }}
+                                        <h3 class="font-semibold text-xl mb-2"> {{ $tourPackage->name }}
                                         </h3>
-                                        <p class="text-gray-500 text-sm mb-3">{{ $tourPackage->description }}</p>
+                                        <p class="text-gray-500 text-sm mb-3 text-justify">{{ $tourPackage->description }}</p>
                                     </div>
                                 </div>
                                 <div class="mx-3 lg:-mx-0 md:mt-3">
