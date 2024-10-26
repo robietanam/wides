@@ -179,8 +179,8 @@
                                                     class="text-3xl font-extrabold text-blue-700"></span>
                                                 <span class="text-gray-600 text-xl font-semibold">IDR</span>
                                             </div>
-                                            <p class="text-sm text-blue-800">Diskon (<span
-                                                    x-text="'-' + discount + '%'"></span>)</p>
+                                            <p class="text-sm text-blue-800" x-show="discount">Diskon (<span
+                                                    x-text="'-' + discount + '%'"></span>) </p>
                                             <p class="text-gray-500 text-xs mt-1">*Harga dapat berubah sewaktu-waktu
                                             </p>
                                         </div>
