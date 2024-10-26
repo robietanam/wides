@@ -22,7 +22,7 @@
                         x-transition:leave-start="opacity-100 transform translate-x-0"
                         x-transition:leave-end="opacity-0 transform -translate-x-full">
                         <div
-                            class="container border border-slate-600 border-opacity-30  bg-white md:shadow-md rounded-md p-5">
+                            class="container border border-slate-600 border-opacity-30 bg-white md:shadow-md rounded-md p-5 max-md:p-0">
                             <div>
                                 <div class="navbar fixed top-0 left-0 right-0 z-50 bg-transparent sm:block  lg:hidden">
                                     <div class="flex-none">
@@ -72,28 +72,28 @@
                             Detail Pemesanan</h3>
                         <div
                             class="container border border-slate-600 border-opacity-30  bg-white md:shadow-md rounded-md p-5">
-                            <div class="flex flex-col items-center justify-between mb-2 gap-3">
+                            <div class="flex flex-col items-center justify-between mb-2 gap-3 max-md:text-xs">
                                 <div class="flex flex-col w-full gap-1">
                                     <p class="text-sm font-bold">Nama Pemesan</p>
-                                    <p class="text-base truncate px-3 py-1 bg-blue-50 rounded-lg">
+                                    <p class=" truncate px-3 py-1 bg-blue-50 rounded-lg">
                                         {{ $transaction->name }}
                                     </p>
                                 </div>
                                 <div class="flex flex-col w-full gap-1">
                                     <p class="text-sm font-bold">Email</p>
-                                    <p class="text-base truncate px-3 py-1 bg-blue-50 rounded-lg">
+                                    <p class=" truncate px-3 py-1 bg-blue-50 rounded-lg">
                                         {{ $transaction->email }}
                                     </p>
                                 </div>
                                 <div class="flex flex-col w-full gap-1">
                                     <p class="text-sm font-bold">No Telp.</p>
-                                    <p class="text-base truncate px-3 py-1 bg-blue-50 rounded-lg">
+                                    <p class=" truncate px-3 py-1 bg-blue-50 rounded-lg">
                                         {{ $transaction->noTelp }}
                                     </p>
                                 </div>
                                 <div class="flex flex-col w-full gap-2">
                                     <p class="text-sm font-bold">Tanggal kunjungan</p>
-                                    <p class="text-base" id="tanggal_kunjungan"></p>
+                                    <p class="" id="tanggal_kunjungan"></p>
                                     {{-- <div id="my-calendar" class="micro-theme" data-language="id"
                                         data-month-format="month YYYY">
                                     </div> --}}
@@ -107,9 +107,9 @@
                             Detail Transaksi</h3>
                         <div
                             class="container border border-slate-600 border-opacity-30 bg-white md:shadow-md rounded-md p-5">
-                            <div class=" mb-2 grid grid-cols-2 gap-2">
-                                <p>Nomor Transaksi</p>
-                                <div class="flex gap-2 item-center">
+                            <div class=" mb-2 grid grid-cols-2 gap-2 max-md:text-xs max-md:grid-cols-3">
+                                <p class="self-center">Nomor Transaksi</p>
+                                <div class="flex gap-2 item-center max-md:col-span-2 justify-self-end">
                                     <p class="self-center">{{ $transaction->transaction_code }}</p>
                                     <div class="p-2 bg-white rounded-lg hover:fill-white hover:bg-slate-500 hover:cursor-pointer"
                                         @click="copyTran">
@@ -133,15 +133,18 @@
                                     </p>
                                 </div>
                                 <p class="self-center">Status</p>
-                                <p class="{{ $statusInfo['class'] }} w-fit px-3 py-1 rounded-lg font-bold">
+                                <p
+                                    class="{{ $statusInfo['class'] }} w-fit px-3 py-1 rounded-lg font-bold max-md:col-span-2 justify-self-end">
                                     {{ $statusInfo['message'] }}
                                 </p>
 
                                 <p>Dibuat pada</p>
-                                <p> {{ $transaction->transaction_date }}</p>
-                                <div class="h-0.5 w-full px-5 bg-slate-200 col-span-2"></div>
+                                <p class=" max-md:col-span-2 justify-self-end"> {{ $transaction->transaction_date }}
+                                </p>
+                                <div class="h-0.5 w-full px-5 bg-slate-200 col-span-2  max-md:col-span-3"></div>
                                 <p class="col-span-2">Rincian Pembayaran</p>
-                                <div class="col-span-2 grid grid-cols-2 gap-2 bg-blue-50 rounded-lg p-4">
+                                <div
+                                    class="col-span-2  max-md:col-span-3 grid grid-cols-2 gap-2 bg-blue-50 rounded-lg p-4">
                                     <p>Harga (x{{ $transaction->quantity }} Tiket)</p>
                                     <p class="text-end">
                                         {{ 'Rp ' . number_format($transaction->price, 0, ',', '.') }}</p>
@@ -157,15 +160,15 @@
                                     </div>
                                 </div>
 
-                                <div class="h-0.5 w-full px-5 bg-slate-200 col-span-2"></div>
+                                <div class="h-0.5 w-full px-5 bg-slate-200 col-span-2  max-md:col-span-3"></div>
                                 @if ($transaction->status == 'pending')
-                                    <div class="col-span-2">
+                                    <div class="col-span-2 max-md:col-span-3">
                                         <p class="text-lg my-3">Metode Pembayaran ({{ $transaction->payment_method }})
                                         </p>
                                         @if (!empty($payment))
                                             <p>Silahkan Transfer Ke {{ $payment->type }} Berikut : </p>
                                         @endif
-                                        <div class="grid grid-cols-2">
+                                        <div class="grid grid-cols-2 gap-5">
                                             @if (!empty($payment) && $transaction->payment_method !== 'Bayar Ditempat')
                                                 <div class="bg-blue-100 p-4 rounded-lg flex flex-col gap-1 h-fit">
                                                     <p class="text-base"> {{ $payment->payment_name }} </p>
@@ -197,24 +200,30 @@
                                                     <p>A/n {{ $payment->account_holder }} </p>
                                                 </div>
                                             @elseif($transaction->payment_method === 'Bayar Ditempat')
-                                                <div class="bg-blue-100 p-4 rounded-lg flex flex-col gap-1 h-fit">
-                                                    <p>Terima kasih sudah memesan,</p>
-                                                    <p class="text-sm">Silahkan hubungi kontak kami untuk melanjutkan.
+                                                <div
+                                                    class="bg-blue-100 p-4 max-md:p-2 max-md:rounded-md rounded-lg flex flex-col gap-1 h-fit">
+                                                    <p class="max-md:text-xs text-sm font-semibold">Terima kasih sudah
+                                                        memesan,</p>
+                                                    <p class="max-md:text-xs text-sm">Silahkan hubungi kontak kami
+                                                        untuk melanjutkan.
                                                     </p>
                                                 </div>
                                             @else
-                                                <div class="bg-red-400 p-4 rounded-lg flex flex-col gap-1 h-fit">
-                                                    <p> Mohon Maaf,</p>
-                                                    <p>Metode pembayaran ini sudah tidak didukung.</p>
+                                                <div
+                                                    class="bg-red-400 p-4 max-md:p-2 max-md:rounded-md rounded-lg flex flex-col gap-1 h-fit">
+                                                    <p class="max-md:text-xs text-sm font-semibold"> Mohon Maaf,</p>
+                                                    <p class="max-md:text-xs text-sm">Metode pembayaran ini sudah tidak
+                                                        didukung.</p>
                                                 </div>
                                             @endif
-                                            <div class="p-3">
-                                                <p class="pb-2">
-                                                    Kontak yang bisa dihubungi</p>
+
+                                            <div class="">
                                                 @if ($contact)
+                                                    <p class="pb-2">
+                                                        Kontak yang bisa dihubungi</p>
                                                     <div>
                                                         <div onclick="window.open('https://api.whatsapp.com/send?phone=62{{ $contact }}&text=Nomor Pesanan : {{ $transaction->transaction_code }} \n','mywindow');"
-                                                            class="group flex flex-row gap-2 py-2 px-5 rounded-md bg-green-400 w-fit shadow-lg border border-slate-300
+                                                            class="group flex flex-row gap-2 py-2 px-3 rounded-md bg-green-400 w-fit shadow-lg border border-slate-300
                                                         hover:bg-white hover:cursor-pointer">
                                                             <svg class="w-4 aspect-square group-hover:fill-green-600 fill-white"
                                                                 version="1.1" id="Layer_1"
@@ -256,7 +265,7 @@
 
                                     </div>
                                 @else
-                                    <div class="p-3 col-span-2">
+                                    <div class="p-3 col-span-2 max-md:col-span-3">
                                         <p class="pb-2">
                                             Kontak yang bisa dihubungi</p>
 
@@ -302,7 +311,7 @@
                             </div>
                             @endif
                             <div @click="window.print()"
-                                class="col-span-2 mt-5 px-5 py-2 bg-yellow-400 rounded-md  text-black font-semibold text-center border border-slate-300 shadow-md
+                                class="col-span-2  max-md:col-span-3 mt-5 px-5 py-2 bg-yellow-400 rounded-md  text-black font-semibold text-center border border-slate-300 shadow-md
                                 hover:text-yellow-400 hover:bg-white hover:cursor-pointer">
                                 <p>Cetak Invoice</p>
                             </div>

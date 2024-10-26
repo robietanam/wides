@@ -175,12 +175,14 @@
                                         <div class="p-2">
                                             <span class="text-gray-600 text-sm font-medium">Harga</span>
                                             <div class="flex items-baseline space-x-2 mt-1">
-                                                <span x-text="amount.toLocaleString('id-ID')"
+                                                <span x-text="ticketPrice.toLocaleString('id-ID')"
                                                     class="text-3xl font-extrabold text-blue-700"></span>
-
                                                 <span class="text-gray-600 text-xl font-semibold">IDR</span>
                                             </div>
-                                            <p class="text-gray-500 text-xs mt-1">Harga dapat berubah sewaktu-waktu</p>
+                                            <p class="text-sm text-blue-800">Diskon (<span
+                                                    x-text="'-' + discount + '%'"></span>)</p>
+                                            <p class="text-gray-500 text-xs mt-1">*Harga dapat berubah sewaktu-waktu
+                                            </p>
                                         </div>
 
                                         <div class="flex items-center border border-gray-300 rounded-lg">
@@ -413,13 +415,13 @@
                                             <p class="font-semibold" x-text="ticketQuantity"></p>
                                         </div>
                                         <div class="flex justify-between mb-2">
-                                            <p class="text-sm">Total Pembayaran</p>
-                                            <p class="font-semibold" x-text="amount.toLocaleString('id-ID')"></p>
+                                            <p class="text-sm">Harga</p>
+                                            <p class="font-semibold" x-text="ticketPrice.toLocaleString('id-ID')"></p>
                                         </div>
                                         <div class="flex justify-between mb-4" x-show="discount">
                                             <p class="text-sm">Diskon (<span x-text="discount + '%'"></span>)</p>
                                             <p class="font-semibold">- <span
-                                                    x-text="(amount * discount / 100).toLocaleString('id-ID')"></span>
+                                                    x-text="(ticketPrice * discount / 100).toLocaleString('id-ID')"></span>
                                             </p>
                                         </div>
                                         <div class="border-t border-gray-200 pt-4">
@@ -428,7 +430,7 @@
                                                 <p class="text-blue-600">
                                                     <span>Rp.</span>
                                                     <span
-                                                        x-text="(amount - (amount * discount / 100)).toLocaleString('id-ID')"></span>
+                                                        x-text="(ticketPrice - (ticketPrice * discount / 100)).toLocaleString('id-ID')"></span>
                                                 </p>
                                             </div>
                                         </div>
@@ -468,25 +470,38 @@
                                     Menunggu. </h2>
                             </div>
                         </div>
-                        <div x-show="currentStep === 4" x-data="{ show: false }" x-init="setTimeout(() => show = true, 1000)"
-                            class="absolute bottom-0 h-60 flex justify-between items-center w-screen px-16">
-                            <div x-show="show" class="btn btn-md w-36">
-                                <i>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        fill="none" id="home">
-                                        <path fill="#292D32" fill-rule="evenodd"
-                                            d="M10.867 3.851c-.506.29-1.11.733-1.981 1.375l-3.5 2.58C4.127 8.732 3.715 9.06 3.492 9.5c-.223.441-.242.967-.242 2.53V15.5c0 1.435.002 2.436.103 3.192.099.734.28 1.122.556 1.399.277.277.665.457 1.4.556.754.101 1.756.103 3.191.103h7c1.435 0 2.436-.002 3.192-.103.734-.099 1.122-.28 1.399-.556.277-.277.457-.665.556-1.4.101-.755.103-1.756.103-3.191v-3.468c0-1.564-.019-2.09-.242-2.53-.223-.442-.635-.77-1.894-1.697l-3.5-2.579c-.872-.642-1.475-1.085-1.98-1.375-.49-.28-.82-.375-1.134-.375-.315 0-.645.096-1.133.375ZM10.12 2.55c.616-.353 1.208-.574 1.879-.574s1.263.221 1.879.574c.59.337 1.262.833 2.089 1.442l3.536 2.606.14.103c1.061.78 1.799 1.323 2.203 2.124.404.8.404 1.716.403 3.033v3.697c0 1.367 0 2.47-.116 3.337-.122.9-.38 1.658-.982 2.26-.602.602-1.36.86-2.26.982-.867.116-1.97.116-3.337.116h-7.11c-1.367 0-2.47 0-3.337-.116-.9-.122-1.658-.38-2.26-.982-.602-.602-.86-1.36-.981-2.26-.117-.867-.117-1.97-.117-3.337v-3.698c0-1.316-.001-2.232.403-3.032.404-.8 1.142-1.343 2.202-2.124l.14-.103 3.537-2.606c.827-.61 1.5-1.105 2.09-1.442Z"
-                                            clip-rule="evenodd"></path>
-                                    </svg>
-                                </i>
-                                Home
+                        <div x-show="currentStep === 4"
+                            class="absolute bottom-0 h-60 flex justify-between items-center w-screen px-16 gap-5">
+                            <div x-show="!loading"
+                                class="p-1 w-32 rounded-lg bg-white flex flex-col justify-center items-center drop-shadow-lg">
+                                <svg class="w-5 aspect-square" fill="#000000" version="1.1" id="Capa_1"
+                                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    viewBox="0 0 495.398 495.398" xml:space="preserve">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <g>
+                                            <g>
+                                                <g>
+                                                    <path
+                                                        d="M487.083,225.514l-75.08-75.08V63.704c0-15.682-12.708-28.391-28.413-28.391c-15.669,0-28.377,12.709-28.377,28.391 v29.941L299.31,37.74c-27.639-27.624-75.694-27.575-103.27,0.05L8.312,225.514c-11.082,11.104-11.082,29.071,0,40.158 c11.087,11.101,29.089,11.101,40.172,0l187.71-187.729c6.115-6.083,16.893-6.083,22.976-0.018l187.742,187.747 c5.567,5.551,12.825,8.312,20.081,8.312c7.271,0,14.541-2.764,20.091-8.312C498.17,254.586,498.17,236.619,487.083,225.514z">
+                                                    </path>
+                                                    <path
+                                                        d="M257.561,131.836c-5.454-5.451-14.285-5.451-19.723,0L72.712,296.913c-2.607,2.606-4.085,6.164-4.085,9.877v120.401 c0,28.253,22.908,51.16,51.16,51.16h81.754v-126.61h92.299v126.61h81.755c28.251,0,51.159-22.907,51.159-51.159V306.79 c0-3.713-1.465-7.271-4.085-9.877L257.561,131.836z">
+                                                    </path>
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
+                                <p>Home</p>
                             </div>
-                            <div x-show="show" class="btn btn-md w-36"
+                            <div x-show="!loading"
+                                class="p-1 w-32 rounded-lg bg-white flex flex-col justify-center items-center drop-shadow-lg"
                                 @click="window.location.href = '/transition/' + transactionId">
-                                <i class="w-5 h-5">
-                                    <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 512 512"
-                                        viewBox="0 0 512 512" id="ticket">
-                                        <path d="M505.081,196.611c3.82,0,6.919-3.097,6.919-6.919V123.56c0-18.536-15.081-33.615-33.617-33.615H33.613
+                                <svg class="w-5 aspect-square" xmlns="http://www.w3.org/2000/svg"
+                                    enable-background="new 0 0 512 512" viewBox="0 0 512 512" id="ticket">
+                                    <path d="M505.081,196.611c3.82,0,6.919-3.097,6.919-6.919V123.56c0-18.536-15.081-33.615-33.617-33.615H33.613
                                           C15.077,89.945,0,105.024,0,123.56v66.133c0,3.822,3.099,6.919,6.919,6.919c32.748,0,59.387,26.642,59.387,59.387
                                           s-26.64,59.387-59.387,59.387c-3.82,0-6.919,3.097-6.919,6.919v66.135c0,18.536,15.077,33.615,33.613,33.615h444.77
                                           c18.536,0,33.617-15.079,33.617-33.615v-66.135c0-3.822-3.099-6.919-6.919-6.919c-32.748,0-59.387-26.642-59.387-59.387
@@ -506,9 +521,10 @@
                                           c-3.82,0-6.919-3.097-6.919-6.919c0-3.822,3.099-6.919,6.919-6.919h122.234C375.874,277.62,378.973,280.717,378.973,284.539z
                                            M378.973,341.62c0,3.822-3.099,6.919-6.919,6.919H249.82c-3.82,0-6.919-3.097-6.919-6.919c0-3.822,3.099-6.919,6.919-6.919h122.234
                                           C375.874,334.702,378.973,337.798,378.973,341.62z"></path>
-                                    </svg>
-                                </i>
-                                Lanjutkan
+                                </svg>
+                                <p>
+                                    Lanjutkan
+                                </p>
                             </div>
                         </div>
                     </div>
