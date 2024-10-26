@@ -1,7 +1,7 @@
 @props(['siteInfo'])
 <footer class="bg-[#0a369d] pt-8 pb-6 px-4 lg:px-20">
 
-    <div class="flex justify-between flex-col lg:flex-row gap-3 lg:gap-0 text-white text-sm">
+    <div class="flex justify-around flex-col lg:flex-row gap-3 lg:gap-0 text-white text-sm">
         <div>
             <div class="max-w-72">
                 <p class="font-semibold">Wisata Desa Karangharjo</p>
@@ -13,12 +13,7 @@
                     {{ $siteInfo->phone_number ?? ' - ' }}</p>
             </div>
         </div>
-        <div>
-            <p class="font-semibold">Jam Berkunjung</p>
-            <p>Senin ‒ Kamis: 09.00 ‒ 15.00</p>
-            <p>Jumat: 14.00 ‒ 16.00</p>
-            <p>Sabtu ‒ Minggu: 09.00 ‒ 12.00</p>
-        </div>
+
         <div class="flex flex-col">
             <a href="/" class="lg:text-right font-semibold">Beranda</a>
             <a href="/artikel" class="lg:text-right font-semibold">Artikel</a>

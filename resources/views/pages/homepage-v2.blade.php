@@ -165,7 +165,7 @@
 
                     <div class="relative mt-16 flex items-center py-5 lg:py-10">
                         <div id="carousel"
-                            class="relative scrollbar-hide flex w-full snap-x snap-mandatory scroll-pl-28 scroll-pr-8 gap-8 overflow-x-auto overscroll-x-contain">
+                            class="relative  flex w-full snap-x snap-mandatory scroll-pl-28 scroll-pr-8 gap-8 overflow-x-auto overscroll-x-contain">
                             @foreach ($tourPackages as $package)
                                 @if ($package->is_visible)
                                     <x-card-package

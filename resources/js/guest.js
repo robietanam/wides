@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const scrollCarousel = (direction) => {
         carousel.scrollBy({
             left: direction * carousel.clientWidth,
-            behavior: "smooth",
         });
         setTimeout(updateButtonState, 300);
     };
@@ -37,12 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
     prevButton.addEventListener("click", () => scrollCarousel(-1));
 
     const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                entry.target.style.opacity =
-                    entry.intersectionRatio > 0.5 ? "1" : "0.5";
-            });
-        },
         { root: carousel, rootMargin: "0px", threshold: 0.5 }
     );
 

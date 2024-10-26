@@ -1,6 +1,6 @@
 @props(['name', 'image', 'price', 'description', 'features', 'isLoggedIn', 'discount'])
 <div
-    class="carousel-item relative flex aspect-[9/12] w-96 shrink-0 snap-start flex-col justify-end overflow-hidden rounded-3xl shadow-lg">
+    class="carousel-item relative flex aspect-[9/12] max-md:w-72 w-96 shrink-0 snap-start flex-col justify-end overflow-hidden rounded-3xl shadow-lg">
     @if (!(is_null($discount) || $discount == 0))
         <div class="absolute z-10 right-0 top-0 h-16 w-16">
             <div
