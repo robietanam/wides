@@ -163,7 +163,7 @@
                                         (x{{ $transaction->quantity }} Tiket)</p>
                                     <p>Diskon (-{{ $transaction->discount }}%)</p>
                                     <p class="text-end">
-                                        {{ 'Rp ' . number_format(($transaction->discount / 100) * $transaction->price, 0, ',', '.') }}
+                                        {{ 'Rp ' . number_format(($transaction->discount / 100) * $transaction->price * $transaction->quantity, 0, ',', '.') }}
                                     </p>
                                     <div class="grid grid-cols-2 border-t col-span-2 py-2">
                                         <p>Total Pembayaran</p>
