@@ -16,6 +16,7 @@
         integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous">
     </script>
 
+    @stack('style')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 </head>

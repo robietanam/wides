@@ -417,7 +417,7 @@
 
             /* Define custom status styles */
             .status-pending {
-                color: #fbbf24;
+                color: #533c00;
                 /* Text color: Tailwind's yellow-600 */
                 background-color: #fefcbf;
                 /* Background color: Tailwind's yellow-300 */

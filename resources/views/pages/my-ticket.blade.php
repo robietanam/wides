@@ -46,23 +46,24 @@
                                 hover:bg-slate-200 hover:cursor-pointer transition-colors duration-100 ease-in-out
                             "
                             x-on:click="window.location='/transaksi/{{ $tct->transaction_code }}';">
-                            <div class="grid md:grid-rows-4">
+                            <div class="grid md:grid-rows-3 gap-2">
                                 <p class="px-3 py-1 bg-blue-300 w-fit rounded-md self-center max-md:text-sm">
                                     {{ $tct->transaction_code }}</p>
-                                <p class="text-3xl max-md:text-2xl max-md:my-2 font-semibold md:row-span-2 self-center">
-                                    Paket
-                                    {{ $tct->package_name }}
-                                </p>
-                                <p class="max-md:text-xs">Tanggal kunjungan : <span> {{ $tct->visit_date }}
-                                    </span> </p>
+                                <div class="flex flex-col max-md:flex-row max-md:gap-2">
+                                    <p class="text-base ">Tanggal kunjungan :
+                                    </p>
+                                    <p>
+                                        {{ $tct->visit_date }}
+                                    </p>
+                                </div>
                             </div>
                             <div
-                                class="md:grid md:grid-rows-4 max-md:flex max-md:flex-row max-md:grid-cols-2 max-md:my-1 place-content-end max-md:place-content-between ">
+                                class="md:grid md:grid-rows-3 max-md:flex max-md:flex-row max-md:grid-cols-2 max-md:my-1 place-content-end max-md:place-content-between ">
                                 <p class=" text-sm self-start max-md:hidden">Dibuat pada :
                                     {{ $tct->transaction_date }}
                                 </p>
                                 <p
-                                    class="md:row-span-2 max-md:text-xs max-md:p-2 px-5 py-2 self-center text-lg rounded-md w-fit {{ $tct->statusInfo['class'] }}">
+                                    class=" max-md:text-xs max-md:p-2 px-5 py-2 justify-self-end self-center text-lg rounded-md w-fit {{ $tct->statusInfo['class'] }}">
                                     {{ $tct->statusInfo['message'] }}</p>
                                 <div class="flex flex-row items-center justify-end px-2 gap-2 max-md:text-xs">
                                     <p class="max-md:hidden">Lihat selengkapnya</p>
@@ -91,7 +92,7 @@
     @push('style')
         <style>
             .status-pending {
-                color: #fbbf24;
+                color: #533c00;
                 /* Text color: Tailwind's yellow-600 */
                 background-color: #fefcbf;
                 /* Background color: Tailwind's yellow-300 */
