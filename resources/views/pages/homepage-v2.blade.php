@@ -36,7 +36,7 @@
 
                     <div class=" lg:py-20 max-w-7xl h-[50vh] lg:h-[90vh] z-20">
                         <h1
-                            class="text-6xl font-hero md:text-8xl tracking-wider font-normal leading-tight animate-fadeInScale w-full lg:w-3/6 mt-10 pt-32 lg:mt-20">
+                            class="text-6xl font-hero md:text-8xl tracking-wider font-normal leading-tight animate-fadeInScale w-full lg:w-3/6 mt-10 max-lg:pt-32 lg:mt-20">
                             Wisata Desa Karangharjo
                         </h1>
 
